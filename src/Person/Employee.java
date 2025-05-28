@@ -1,3 +1,5 @@
+package Person;
+
 public class Employee {
     private int employeeCode;
     private int salary;

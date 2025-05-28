@@ -1,3 +1,7 @@
+package Bank;
+
+import Person.Customer;
+import Person.Employee;
 import java.util.ArrayList;
 
 public class Bank {
