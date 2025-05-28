@@ -1,6 +1,6 @@
 package Person;
 
-public class BranchManager {
+public class BranchManager extends Employee{
     private int salary;
 
     //receive employee list

@@ -1,6 +1,9 @@
 package Person;
 
-public class Employee {
+
+import Bank.Branch;
+
+public abstract class Employee extends Person{
     private int employeeCode;
     private int salary;
     private Branch workplace;
