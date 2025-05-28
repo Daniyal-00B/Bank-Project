@@ -10,8 +10,17 @@ public class Bank {
     ArrayList<Employee> employeeList = new ArrayList<>();
     ArrayList<Customer> customerList = new ArrayList<>();
 
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
     public void createBranch(){}
     public void addEmployee(){}
     public void displayBranchList(){}
     public void displayCustomerList(){}
+
 }

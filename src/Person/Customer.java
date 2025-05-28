@@ -14,4 +14,12 @@ public class Customer {
     public void statusReport(){}
     public void searchAccount(){}
     public void loan(){}
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
