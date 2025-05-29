@@ -1,8 +1,8 @@
 package Bank;
 
 import Account.Account;
+import Person.AssistantManager;
 import Person.BranchManager;
-import Person.Employee;
 import Person.Teller;
 
 import java.util.ArrayList;
@@ -10,14 +10,14 @@ import java.util.ArrayList;
 public class Branch {
     private int branchNumber;
     private BranchManager branchManager;
-    private Employee branchAssistant;
+    private AssistantManager assistantManager;
     private static int branchCount = 0;
     
-    public Branch(){
+    public Branch(String bankName){
         setBranchNumber();
-        setbranchManager();
-        setBranchAssistant();
-        
+        String workPlace = bankName + " Branch: " + branchNumber;
+        setBranchManager(workPlace);
+        setAssistantManager(workPlace);
     }
 
     ArrayList<Teller> tellerList = new ArrayList<>();
@@ -37,16 +37,16 @@ public class Branch {
         return branchManager;
     }
 
-    public void setbranchManager() {
-        branchManager = new BranchManager();
+    public void setBranchManager(String workPlace) {
+        branchManager = new BranchManager(workPlace);
     }
 
-    public Employee getBranchAssistant() {
-        return branchAssistant;
+    public AssistantManager getBranchAssistant() {
+        return assistantManager;
     }
 
-    public void setBranchAssistant() {
-        
+    public void setAssistantManager(String workPlace) {
+        assistantManager = new AssistantManager(workPlace);
     }
 
     public void displayCustomerList(){}

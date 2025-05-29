@@ -2,13 +2,14 @@ package Person;
 import Bank.Branch;
 public class Employee extends Person {
     private int employeeCode;
-    private int salary;
+    private long salary;
     private String workplace;
+    private static int employeeCounter = 0;
 
-    public Employee(String firstName, String lastName, String birthday, long nationalCode, String address, String phoneNumber, int employeeCode, int salary, String workplace) {
-        super(firstName, lastName, birthday, nationalCode, address, phoneNumber);
-        setEmployeeCode(employeeCode);
-        setSalary(salary);
+    public Employee(String workplace, int type){
+        super(type);
+        setEmployeeCode();
+        setSalary();
         setWorkplace(workplace);
     }
 
@@ -24,19 +25,21 @@ public class Employee extends Person {
         this.workplace = workplace;
     }
 
-    public int getSalary() {
+    public long getSalary() {
         return salary;
     }
 
-    public void setSalary(int salary) {
-        this.salary = salary;
+    public void setSalary() {
+        System.out.print("Salary: ");
+        salary = scanner.nextInt();
     }
 
     public int getEmployeeCode() {
         return employeeCode;
     }
 
-    public void setEmployeeCode(int employeeCode) {
-        this.employeeCode = employeeCode;
+    public void setEmployeeCode() {
+        employeeCode++;
+        employeeCode = employeeCounter;
     }
 }

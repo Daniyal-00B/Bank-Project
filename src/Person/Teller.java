@@ -1,11 +1,14 @@
 package Person;
 
 public class Teller extends Employee{
+    public Teller(){
+        super("",3);
+    }
     private int salary;
 
     public void acceptRequests(){}
 
-    public int getSalary() {
+    public long getSalary() {
         return salary;
     }
 

@@ -1,29 +1,35 @@
 package Person;
 
+import java.io.IOException;
+import java.util.Scanner;
+
 public abstract class Person {
     private String firstName, lastName;
     private String birthday;
-    private long nationalCode;
+    private String nationalCode;
     private String address;
+    private String phoneNumber;
+    Scanner scanner = new Scanner(System.in);
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    public Person(String firstName, String lastName, String birthday, long nationalCode, String address, String phoneNumber) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        setBirthday(birthday);
-        setNationalCode(nationalCode);
-        setAddress(address);
-        setPhoneNumber(phoneNumber);
+    public Person(int type){
+        if(type==0) System.out.println("\nBranch Manager Info:");
+        else System.out.println("\nAssistant Manager Info:");
+        setFirstName();
+        setLastName();
+        setBirthday();
+        setNationalCode();
+        setAddress();
+        setPhoneNumber();
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    private String phoneNumber;
 
     public String getFirstName() {
         return firstName;
@@ -33,31 +39,60 @@ public abstract class Person {
         return birthday;
     }
 
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
+    public void setBirthday() {
+        System.out.print("Birthday: ");
+        birthday = scanner.next();
     }
 
-    public long getNationalCode() {
+    public String getNationalCode() {
         return nationalCode;
     }
 
-    public void setNationalCode(long nationalCode) {
-        this.nationalCode = nationalCode;
+    public void setNationalCode() {
+        System.out.print("National Code: ");
+        nationalCode = scanner.next();
     }
 
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAddress() {
+        System.out.print("Address: ");
+        scanner.nextLine();
+        address = scanner.nextLine();
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhoneNumber() {
+        System.out.print("Phone Number: ");
+        String temp = scanner.next();
+        try {
+            Long.parseLong(temp);
+        }
+        catch (Exception _) {
+            System.out.println("Phone Number Must be Number");
+            setPhoneNumber();
+        }
+        if(temp.length()==11 && temp.charAt(0)=='0'){
+            phoneNumber = temp;
+        }
+        else {
+            System.out.println("Invalid Format! Try Again");
+            setPhoneNumber();
+        }
+    }
+
+    public void setFirstName() {
+        System.out.print("First Name: ");
+        firstName = scanner.nextLine();
+    }
+
+    public void setLastName(){
+        System.out.print("Last Name: ");
+        lastName = scanner.nextLine();
     }
 }

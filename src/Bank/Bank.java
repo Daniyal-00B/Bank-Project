@@ -13,7 +13,7 @@ public class Bank {
 
     public Bank(String bankName) {
         this.bankName = bankName;
-        branchList.add(new Branch());
+        branchList.add(new Branch(bankName));
     }
 
     public String getBankName() {

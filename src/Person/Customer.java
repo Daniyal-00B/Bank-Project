@@ -4,7 +4,7 @@ import Account.Account;
 
 import java.util.ArrayList;
 
-public class Customer extends Person{
+public class Customer{
     private int id;
     ArrayList<Account> accountList = new ArrayList<>();
     // mail
