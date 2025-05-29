@@ -42,4 +42,8 @@ public class Employee extends Person {
         employeeCode++;
         employeeCode = employeeCounter;
     }
+
+//    public void printInfo(){
+        public String fullName = getFirstName() + " " + getLastName();
+    //}
 }
