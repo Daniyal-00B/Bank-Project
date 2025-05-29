@@ -1,18 +1,26 @@
 package Person;
 import Bank.Branch;
-public class Employee {
+public class Employee extends Person {
     private int employeeCode;
     private int salary;
-    private Branch workplace;
+    private String workplace;
+
+    public Employee(String firstName, String lastName, String birthday, long nationalCode, String address, String phoneNumber, int employeeCode, int salary, String workplace) {
+        super(firstName, lastName, birthday, nationalCode, address, phoneNumber);
+        setEmployeeCode(employeeCode);
+        setSalary(salary);
+        setWorkplace(workplace);
+    }
+
     // mail
     public void history(){}
     public void handlingRequests(){}
 
-    public Branch getWorkplace() {
+    public String getWorkplace() {
         return workplace;
     }
 
-    public void setWorkplace(Branch workplace) {
+    public void setWorkplace(String workplace) {
         this.workplace = workplace;
     }
 

@@ -5,14 +5,28 @@ public abstract class Person {
     private String birthday;
     private long nationalCode;
     private String address;
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Person(String firstName, String lastName, String birthday, long nationalCode, String address, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        setBirthday(birthday);
+        setNationalCode(nationalCode);
+        setAddress(address);
+        setPhoneNumber(phoneNumber);
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
     private String phoneNumber;
 
     public String getFirstName() {
         return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
     }
 
     public String getBirthday() {

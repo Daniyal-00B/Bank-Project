@@ -9,8 +9,17 @@ import java.util.ArrayList;
 
 public class Branch {
     private int branchNumber;
-    private BranchManager branchBoss;
+    private BranchManager branchManager;
     private Employee branchAssistant;
+    private static int branchCount = 0;
+    
+    public Branch(){
+        setBranchNumber();
+        setbranchManager();
+        setBranchAssistant();
+        
+    }
+
     ArrayList<Teller> tellerList = new ArrayList<>();
     ArrayList<Account> accountList = new ArrayList<>();
 
@@ -19,24 +28,25 @@ public class Branch {
         return branchNumber;
     }
 
-    public void setBranchNumber(int branchNumber) {
-        this.branchNumber = branchNumber;
+    public void setBranchNumber() {
+        branchCount++;
+        branchNumber = branchCount;
     }
 
-    public BranchManager getBranchBoss() {
-        return branchBoss;
+    public BranchManager getbranchManager() {
+        return branchManager;
     }
 
-    public void setBranchBoss(BranchManager branchBoss) {
-        this.branchBoss = branchBoss;
+    public void setbranchManager() {
+        branchManager = new BranchManager();
     }
 
     public Employee getBranchAssistant() {
         return branchAssistant;
     }
 
-    public void setBranchAssistant(Employee branchAssistant) {
-        this.branchAssistant = branchAssistant;
+    public void setBranchAssistant() {
+        
     }
 
     public void displayCustomerList(){}
