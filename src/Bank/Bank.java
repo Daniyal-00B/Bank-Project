@@ -25,7 +25,9 @@ public class Bank {
         this.bankName = bankName;
     }
 
-    public void createBranch(){}
+    public void createBranch(){
+        System.out.println("%%%%%%%%%%%  Create Branch Method In The Bank Class");
+    }
     public void addEmployee(Employee employee){
         employeeList.add(employee);
     }
@@ -34,6 +36,7 @@ public class Bank {
             System.out.println("["+ (i+1) + "] " + branchList.get(i).getBranchFullName());
     }
     public void displayEmployeeList(){
+        System.out.println(employeeList.size());
         for (int i=0;i<employeeList.size();i++)
             System.out.println("[" + i + "] " + employeeList.get(i).fullName);
     }
