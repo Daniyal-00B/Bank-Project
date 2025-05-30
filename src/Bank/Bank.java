@@ -26,7 +26,7 @@ public class Bank {
     }
 
     public void createBranch(){
-        System.out.println("%%%%%%%%%%%  Create Branch Method In The Bank Class");
+        branchList.add(new Branch(getBankName()));
     }
     public void addEmployee(Employee employee){
         employeeList.add(employee);
