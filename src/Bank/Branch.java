@@ -26,6 +26,7 @@ public class Branch extends Bank{
     }
 
 
+
     public int getBranchNumber() {
         return branchNumber;
     }
