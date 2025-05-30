@@ -62,7 +62,7 @@ public class Menu {
         String bankName = scanner.nextLine();
         bankList.add(new Bank(bankName));
         System.out.println("Bank Created!🎉\n");
-
+        bankList.getFirst().displayEmployeeList();
     }
 
     static void selectRole(String workPlace, int bankCode){
@@ -72,7 +72,8 @@ public class Menu {
                 System.out.println("Enter Your Employee Code: ");
                 String employeeCode = scanner.nextLine();
                 if(employeeCode.isEmpty()){
-                    bankList.get(bankCode).addEmployee(new Employee(workPlace,3));
+//                    bankList.get(bankCode).addEmployee(new Employee(workPlace,3));
+                    bankList.getFirst().addEmployee(new Employee(workPlace,3));
                     bankList.get(bankCode).displayEmployeeList();
                 }
 //                Bank.login(employeeCode);
@@ -81,14 +82,11 @@ public class Menu {
                 System.out.print("Enter Your National Code: ");
                 long nationalCode = scanner.nextLong();
 //                Customer.login(nationalCode);
-
             }
             default -> {
                 System.out.println("Invalid choice! try again");
                 selectRole(workPlace,bankCode);
             }
-
-
         }
     }
 }
