@@ -1,6 +1,5 @@
 package Bank;
 
-import Person.BranchManager;
 import Person.Customer;
 import Person.Employee;
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ public class Bank {
 
     public Bank(){}
     public Bank(String bankName) {
-        this.bankName = bankName;
+        setBankName(bankName);
         branchList.add(new Branch(bankName));
     }
 
@@ -26,6 +25,7 @@ public class Bank {
     }
 
     public void createBranch(){
+        System.out.println("New Branch Created!🎉");
         branchList.add(new Branch(getBankName()));
     }
     public void addEmployee(Employee employee){
