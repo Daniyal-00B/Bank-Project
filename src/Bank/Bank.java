@@ -35,7 +35,7 @@ public class Bank {
     }
     public void displayEmployeeList(){
         for (int i=0;i<employeeList.size();i++)
-            System.out.println("jsdks2");
+            System.out.println("[" + i + "] " + employeeList.get(i).fullName);
     }
     public void displayCustomerList(){}
 

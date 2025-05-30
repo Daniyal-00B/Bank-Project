@@ -11,9 +11,6 @@ public abstract class Person {
     private String phoneNumber;
     Scanner scanner = new Scanner(System.in);
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 
     public Person(int type){
         if(type==0) System.out.println("\nBranch Manager Info:");
