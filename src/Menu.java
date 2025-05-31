@@ -32,7 +32,7 @@ public class Menu {
         }while (choice != 0);
         scanner.close();
     }
-    static void enterBank(){
+    /*static void enterBank(){
     {
         if (!bankList.isEmpty()) {
             showAllBanks();
@@ -57,7 +57,7 @@ public class Menu {
             System.out.println("Bank List is Empty!");
         }
     }
-}
+}*/
 
     static void createBank(){
         String choice = "+";
@@ -100,7 +100,7 @@ public class Menu {
         }
     }
 
-    static void selectRole(String workPlace, int bankCode, int branchCode){
+    /*static void selectRole(String workPlace, int bankCode, int branchCode){
         int select = scanner.nextInt();
         switch (select){
             case 1 -> employeeSection(workPlace, bankCode, branchCode);
@@ -136,33 +136,52 @@ public class Menu {
                     System.out.println("User Logged In");
             }
         }
-    }
+    }*/
 
     static void login_signup(){
+        if (bankList.isEmpty()){
+            System.out.println("Please Create a Bank First");
+            return;
+        }
         System.out.print("Please Enter Your Code or Press + for Sign Up (0 for Exit): ");
         String choice = scanner.next();
         switch (choice){
             case "+" -> signUp();
             case "0" ->{}
-
+            default -> {
+                System.out.println("Login %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+            }
         }
     }
     static void signUp(){
         showAllBanks();
-        System.out.println("Select a Bank: ");
+        System.out.print("Select a Bank: ");
         int selectedBank = scanner.nextInt()-1;
-        if (selectedBank < bankList.size() || selectedBank > bankList.size()){
+        if (selectedBank < 0 || selectedBank > bankList.size()){
             System.out.println("invalid Choice! Try Again");
             signUp();
         }
         bankList.get(selectedBank).displayBranchList();
         System.out.print("Please Select a Branch: ");
-        System.out.print("\n[1] Employee\n[2] Customer\nPlease Select Your Role: ");
         int selectedBranch = scanner.nextInt()-1;
-        if (selectedBranch < bankList.get(selectedBank).branchList.size() || selectedBranch > bankList.get(selectedBank).branchList.size())
+        if (selectedBranch < 0 || selectedBranch > bankList.get(selectedBank).branchList.size())
         {
             System.out.println("invalid Choice! Try Again");
             signUp();
+        }
+        System.out.print("\n[1] Employee\n[2] Customer\nPlease Select Your Role: ");
+        int type;
+        do {
+            type = scanner.nextInt();
+        }while (type!=1 && type!=2);
+        if (type == 1){
+            String workPlace = bankList.get(selectedBank).getBankName();
+            bankList.get(selectedBank).branchList.get(selectedBranch).addEmployee(new Employee(workPlace,3, selectedBank, selectedBranch));
+            int employeeIndex = bankList.get(selectedBank).branchList.get(selectedBranch).employeeList.getFirst().getEmployeeCounter();
+            bankList.get(selectedBank).branchList.get(selectedBranch).addTeller(bankList.get(selectedBank).branchList.get(selectedBranch).employeeList.get(employeeIndex));
+        }
+        else {
+            System.out.println("customer sign up %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
         }
     }
 }
