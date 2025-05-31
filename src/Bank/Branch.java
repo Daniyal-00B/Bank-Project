@@ -16,12 +16,12 @@ public class Branch extends Bank{
     ArrayList<Teller> tellerList = new ArrayList<>();
     ArrayList<Account> accountList = new ArrayList<>();
     
-    public Branch(String bankName){
+    public Branch(String bankName, int bankCode){
         setBranchNumber();
         branchFullName = bankName + " Branch: " + branchNumber;
-        setBranchManager(branchFullName);
+        setBranchManager(branchFullName, bankCode, getBranchNumber()-1);
         addEmployee(branchManager);
-        setAssistantManager(branchFullName);
+        setAssistantManager(branchFullName, bankCode, getBranchNumber()-1);
         addEmployee(assistantManager);
     }
 
@@ -40,8 +40,8 @@ public class Branch extends Bank{
         return branchManager;
     }
 
-    public void setBranchManager(String workPlace) {
-        branchManager = new BranchManager(workPlace);
+    public void setBranchManager(String workPlace, int bankCode, int branchCode) {
+        branchManager = new BranchManager(workPlace, bankCode, branchCode);
 
     }
 
@@ -49,8 +49,8 @@ public class Branch extends Bank{
         return assistantManager;
     }
 
-    public void setAssistantManager(String workPlace) {
-        assistantManager = new AssistantManager(workPlace);
+    public void setAssistantManager(String workPlace, int bankCode, int branchCode) {
+        assistantManager = new AssistantManager(workPlace, bankCode, branchCode);
     }
 
     public void removeEmployee(){}

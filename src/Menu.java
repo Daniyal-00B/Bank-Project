@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class Menu {
     static ArrayList<Bank> bankList = new ArrayList<>();
+    static int bankCounter = 0;
     static Scanner scanner = new Scanner(System.in);
     public static void MainMenu(){
 
@@ -14,16 +15,17 @@ public class Menu {
         String Menu = """
                 
                 ***********(<<  BANK PROJECT  >>)***********
-                1. Enter Bank
-                2. Create Bank
+                1. Create Bank
+                2. Login/Sign Up
                 Choose a Number:""" + " ";
 
         do {
             System.out.print(Menu);
             choice = scanner.nextInt();
             switch (choice){
-                case 1 -> enterBank();
-                case 2 -> createBank();
+                //case  -> enterBank();
+                case 1 -> createBank();
+                case 2 -> login_signup();
                 case 0 -> System.out.println("Program Ended...");
                 default -> System.out.println("Invalid Choice!");
             }
@@ -69,7 +71,8 @@ public class Menu {
                 System.out.print("Enter the Bank Name: ");
                 scanner.nextLine();
                 String bankName = scanner.nextLine();
-                bankList.add(new Bank(bankName));
+                bankList.add(new Bank(bankName, bankCounter));
+                bankCounter++;
                 System.out.println("Bank Created!🎉\n");
             }
             case "0" -> {}
@@ -114,7 +117,7 @@ public class Menu {
         String employeeCode = scanner.next();
         switch (employeeCode.toLowerCase()){
             case "+" -> {
-                bankList.get(bankCode).branchList.get(branchCode).addEmployee(new Employee(workPlace,3));
+                bankList.get(bankCode).branchList.get(branchCode).addEmployee(new Employee(workPlace,3, bankCode, branchCode));
             }
             case "q" -> {}
             default -> {
@@ -132,6 +135,34 @@ public class Menu {
 //                    ------------------------Login-------------------
                     System.out.println("User Logged In");
             }
+        }
+    }
+
+    static void login_signup(){
+        System.out.print("Please Enter Your Code or Press + for Sign Up (0 for Exit): ");
+        String choice = scanner.next();
+        switch (choice){
+            case "+" -> signUp();
+            case "0" ->{}
+
+        }
+    }
+    static void signUp(){
+        showAllBanks();
+        System.out.println("Select a Bank: ");
+        int selectedBank = scanner.nextInt()-1;
+        if (selectedBank < bankList.size() || selectedBank > bankList.size()){
+            System.out.println("invalid Choice! Try Again");
+            signUp();
+        }
+        bankList.get(selectedBank).displayBranchList();
+        System.out.print("Please Select a Branch: ");
+        System.out.print("\n[1] Employee\n[2] Customer\nPlease Select Your Role: ");
+        int selectedBranch = scanner.nextInt()-1;
+        if (selectedBranch < bankList.get(selectedBank).branchList.size() || selectedBranch > bankList.get(selectedBank).branchList.size())
+        {
+            System.out.println("invalid Choice! Try Again");
+            signUp();
         }
     }
 }

@@ -4,8 +4,8 @@ import Bank.Branch;
 
 public class BranchManager extends Employee {
 
-    public BranchManager(String workPlace){
-        super(workPlace,0);
+    public BranchManager(String workPlace, int bankCode, int branchCode){
+        super(workPlace,1, bankCode, branchCode);
     }
 
     //receive employee list

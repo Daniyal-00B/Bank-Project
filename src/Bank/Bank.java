@@ -6,14 +6,16 @@ import java.util.ArrayList;
 
 public class Bank {
     private String bankName;
+    private int bankCode;
     public ArrayList<Branch> branchList = new ArrayList<>();
     public ArrayList<Employee> employeeList = new ArrayList<>();
     public ArrayList<Customer> customerList = new ArrayList<>();
 
     public Bank(){}
-    public Bank(String bankName) {
+    public Bank(String bankName, int bankCode) {
         setBankName(bankName);
-        branchList.add(new Branch(bankName));
+        branchList.add(new Branch(bankName, bankCode));
+        this.bankCode = bankCode;
     }
 
     public String getBankName() {
@@ -26,7 +28,8 @@ public class Bank {
 
     public void createBranch(){
         System.out.println("New Branch Created!🎉");
-        branchList.add(new Branch(getBankName()));
+
+        branchList.add(new Branch(getBankName(), bankCode));
     }
     public void addEmployee(Employee employee){
         employeeList.add(employee);
@@ -37,8 +40,9 @@ public class Bank {
     }
     public void displayEmployeeList(){
         System.out.println(employeeList.size());
-        for (int i=0;i<employeeList.size();i++)
-            System.out.println("[" + i + "] " + employeeList.get(i).fullName);
+        for (int i=0;i<employeeList.size();i++) {
+            System.out.println("[" + (i+1) + "] " + employeeList.get(i).fullName);
+        }
     }
     public void displayCustomerList(){}
 

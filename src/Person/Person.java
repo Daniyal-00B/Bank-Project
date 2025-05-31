@@ -14,8 +14,8 @@ public abstract class Person {
 
     public Person(int type){
         switch (type){
-            case 0 -> System.out.println("\nBranch Manager Info:");
-            case 1 -> System.out.println("\nAssistant Manager Info:");
+            case 1 -> System.out.println("\nBranch Manager Info:");
+            case 2 -> System.out.println("\nAssistant Manager Info:");
             case 3 -> System.out.println("\nPlease Enter Your Info:");
         }
         setFirstName();
