@@ -45,10 +45,6 @@ public class Employee extends Person {
         employeeCode = ((type*10+bankCode)*10+branchCode)*10+employeeCounter;
     }
 
-    public int getEmployeeCounter() {
-        return (employeeCounter-1);
-    }
-
     //    public void printInfo(){
         public String fullName = getFirstName() + " " + getLastName();
     //}

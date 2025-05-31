@@ -1,6 +1,7 @@
 import Bank.Bank;
 import Person.Customer;
 import Person.Employee;
+import Person.Teller;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -23,7 +24,6 @@ public class Menu {
             System.out.print(Menu);
             choice = scanner.nextInt();
             switch (choice){
-                //case  -> enterBank();
                 case 1 -> createBank();
                 case 2 -> login_signup();
                 case 0 -> System.out.println("Program Ended...");
@@ -32,32 +32,6 @@ public class Menu {
         }while (choice != 0);
         scanner.close();
     }
-    /*static void enterBank(){
-    {
-        if (!bankList.isEmpty()) {
-            showAllBanks();
-            System.out.print("Select A Bank (0 for exit): ");
-            int select = (scanner.nextInt()) - 1;
-            if(select == -1)
-                return;
-            int bankCode = select;
-            Bank selectedBank = bankList.get(select);
-            System.out.println("\n***** Branch List *****");
-            selectedBank.displayBranchList();
-            System.out.print("Select a Branch: ");
-            select = (scanner.nextInt()) - 1;
-            int branchCode = select;
-            String branchFullName = selectedBank.branchList.get(select).getBranchFullName();
-            System.out.println("\nWelcome to " + branchFullName);
-            System.out.println("[1] Employee \n[2] Customer");
-            System.out.print("Select Your Role: ");
-            selectRole(branchFullName,bankCode,branchCode);
-
-        }else {
-            System.out.println("Bank List is Empty!");
-        }
-    }
-}*/
 
     static void createBank(){
         String choice = "+";
@@ -70,7 +44,12 @@ public class Menu {
             case "+" -> {
                 System.out.print("Enter the Bank Name: ");
                 scanner.nextLine();
-                String bankName = scanner.nextLine();
+                String bankName;
+                do {
+                    bankName = scanner.nextLine();
+                    if (bankName.isEmpty()) System.out.print("Bank Name Can Not Be Empty!\nEnter the Bank Name: ");
+                }while (bankName.isEmpty());
+                System.out.println("\nCreating The First Branch for Bank");
                 bankList.add(new Bank(bankName, bankCounter));
                 bankCounter++;
                 System.out.println("Bank Created!🎉\n");
@@ -99,44 +78,6 @@ public class Menu {
             System.out.println("[" + (i + 1) + "] " + bankList.get(i).getBankName());
         }
     }
-
-    /*static void selectRole(String workPlace, int bankCode, int branchCode){
-        int select = scanner.nextInt();
-        switch (select){
-            case 1 -> employeeSection(workPlace, bankCode, branchCode);
-            case 2 -> {}
-            default -> {
-                System.out.println("Invalid choice! try again");
-                selectRole(workPlace,bankCode,branchCode);
-            }
-        }
-    }
-
-    static void employeeSection(String workPlace, int bankCode, int branchCode){
-        System.out.print("Enter Your Employee Code for Login or Enter (+) Symbol for Sign Up (Q for Exit): ");
-        String employeeCode = scanner.next();
-        switch (employeeCode.toLowerCase()){
-            case "+" -> {
-                bankList.get(bankCode).branchList.get(branchCode).addEmployee(new Employee(workPlace,3, bankCode, branchCode));
-            }
-            case "q" -> {}
-            default -> {
-                int selectedEmployee=0;
-                try {
-                    selectedEmployee = Integer.parseInt(employeeCode);
-                }
-                catch (Exception _){
-                    System.out.println("Invalid Choice!🤬");
-                }
-                int employeeListSize = bankList.get(bankCode).branchList.get(branchCode).employeeList.size();
-                if (selectedEmployee < 0 || selectedEmployee > employeeListSize)
-                    System.out.println("This employee is not Exist!");
-                else
-//                    ------------------------Login-------------------
-                    System.out.println("User Logged In");
-            }
-        }
-    }*/
 
     static void login_signup(){
         if (bankList.isEmpty()){
@@ -176,9 +117,8 @@ public class Menu {
         }while (type!=1 && type!=2);
         if (type == 1){
             String workPlace = bankList.get(selectedBank).getBankName();
-            bankList.get(selectedBank).branchList.get(selectedBranch).addEmployee(new Employee(workPlace,3, selectedBank, selectedBranch));
-            int employeeIndex = bankList.get(selectedBank).branchList.get(selectedBranch).employeeList.getFirst().getEmployeeCounter();
-            bankList.get(selectedBank).branchList.get(selectedBranch).addTeller(bankList.get(selectedBank).branchList.get(selectedBranch).employeeList.get(employeeIndex));
+            bankList.get(selectedBank).branchList.get(selectedBranch).addTeller(workPlace,3, selectedBank, selectedBranch);
+            bankList.get(selectedBank).branchList.get(selectedBranch).addEmployee(bankList.get(selectedBank).branchList.get(selectedBranch).getLastTeller());
         }
         else {
             System.out.println("customer sign up %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");

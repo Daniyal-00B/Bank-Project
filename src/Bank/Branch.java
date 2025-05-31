@@ -13,7 +13,7 @@ public class Branch extends Bank{
     private AssistantManager assistantManager;
     private static int branchCount = 0;
     private String branchFullName;
-    ArrayList<Employee> tellerList = new ArrayList<>();
+    ArrayList<Teller> tellerList = new ArrayList<>();
     ArrayList<Account> accountList = new ArrayList<>();
     
     public Branch(String bankName, int bankCode){
@@ -60,8 +60,12 @@ public class Branch extends Bank{
         return branchFullName;
     }
 
-    public void addTeller(Employee newEmployee){
-        tellerList.add(newEmployee);
+    public void addTeller(String workPlace, int type, int bankCode, int branchCode){
+        tellerList.add(new Teller(workPlace, type, bankCode, branchCode));
+    }
+
+    public Teller getLastTeller(){
+        return tellerList.getLast();
     }
 
 }
