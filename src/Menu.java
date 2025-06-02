@@ -1,7 +1,4 @@
 import Bank.Bank;
-import Person.Customer;
-import Person.Employee;
-import Person.Teller;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -89,9 +86,9 @@ public class Menu {
         switch (choice){
             case "+" -> signUp();
             case "0" ->{}
-            default -> {
+            default -> 
                 System.out.println("Login %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-            }
+
         }
     }
     static void signUp(){
