@@ -1,7 +1,7 @@
 package Person;
 import Bank.Branch;
 public class Employee extends Person {
-    private long employeeCode;
+    private String employeeCode;
     private long salary;
     private String workplace;
     private static int employeeCounter = 0;
@@ -34,7 +34,7 @@ public class Employee extends Person {
         salary = scanner.nextInt();
     }
 
-    public long getEmployeeCode() {
+    public String getEmployeeCode() {
         return employeeCode;
     }
 
@@ -42,7 +42,7 @@ public class Employee extends Person {
         employeeCounter++;
         bankCode++;
         branchCode++;
-        employeeCode = ((type*10+bankCode)*10+branchCode)*10+employeeCounter;
+        employeeCode = type + "." +bankCode + "." +branchCode + "." +employeeCounter;
     }
 
     //    public void printInfo(){
