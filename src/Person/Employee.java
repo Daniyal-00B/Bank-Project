@@ -1,14 +1,14 @@
 package Person;
 import Bank.Branch;
 public class Employee extends Person {
-    private int employeeCode;
+    private long employeeCode;
     private long salary;
     private String workplace;
     private static int employeeCounter = 0;
 
-    public Employee(String workplace, int type){
+    public Employee(String workplace, int type, int bankCode, int branchCode){
         super(type);
-        setEmployeeCode();
+        setEmployeeCode(type, bankCode, branchCode);
         setSalary();
         setWorkplace(workplace);
     }
@@ -34,16 +34,18 @@ public class Employee extends Person {
         salary = scanner.nextInt();
     }
 
-    public int getEmployeeCode() {
+    public long getEmployeeCode() {
         return employeeCode;
     }
 
-    public void setEmployeeCode() {
-        employeeCode++;
-        employeeCode = employeeCounter;
+    public void setEmployeeCode(int type, int bankCode, int branchCode) {
+        employeeCounter++;
+        bankCode++;
+        branchCode++;
+        employeeCode = ((type*10+bankCode)*10+branchCode)*10+employeeCounter;
     }
 
-//    public void printInfo(){
+    //    public void printInfo(){
         public String fullName = getFirstName() + " " + getLastName();
     //}
 }

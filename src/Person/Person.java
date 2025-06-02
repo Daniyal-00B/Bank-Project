@@ -1,6 +1,5 @@
 package Person;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public abstract class Person {
@@ -11,10 +10,12 @@ public abstract class Person {
     private String phoneNumber;
     Scanner scanner = new Scanner(System.in);
 
-
     public Person(int type){
-        if(type==0) System.out.println("\nBranch Manager Info:");
-        else System.out.println("\nAssistant Manager Info:");
+        switch (type){
+            case 1 -> System.out.println("\nBranch Manager Info:");
+            case 2 -> System.out.println("\nAssistant Manager Info:");
+            case 3 -> System.out.println("\nPlease Enter Your Info:");
+        }
         setFirstName();
         setLastName();
         setBirthday();
@@ -27,7 +28,6 @@ public abstract class Person {
         return lastName;
     }
 
-
     public String getFirstName() {
         return firstName;
     }
@@ -38,7 +38,12 @@ public abstract class Person {
 
     public void setBirthday() {
         System.out.print("Birthday: ");
-        birthday = scanner.next();
+        if (scanner.hasNext()) {
+            birthday = scanner.next();
+            scanner.nextLine();
+        } else {
+            birthday = "";
+        }
     }
 
     public String getNationalCode() {
@@ -47,7 +52,12 @@ public abstract class Person {
 
     public void setNationalCode() {
         System.out.print("National Code: ");
-        nationalCode = scanner.next();
+        if (scanner.hasNext()) {
+            nationalCode = scanner.next();
+            scanner.nextLine();
+        } else {
+            nationalCode = "";
+        }
     }
 
     public String getAddress() {
@@ -56,8 +66,11 @@ public abstract class Person {
 
     public void setAddress() {
         System.out.print("Address: ");
-        scanner.nextLine();
-        address = scanner.nextLine();
+        if (scanner.hasNextLine()) {
+            address = scanner.nextLine();
+        } else {
+            address = "";
+        }
     }
 
     public String getPhoneNumber() {
@@ -66,18 +79,25 @@ public abstract class Person {
 
     public void setPhoneNumber() {
         System.out.print("Phone Number: ");
+        if (!scanner.hasNext()) {
+            phoneNumber = "";
+            return;
+        }
+
         String temp = scanner.next();
+        scanner.nextLine();
+
         try {
             Long.parseLong(temp);
-        }
-        catch (Exception _) {
+        } catch (Exception _) {
             System.out.println("Phone Number Must be Number");
             setPhoneNumber();
+            return;
         }
-        if(temp.length()==11 && temp.charAt(0)=='0'){
+
+        if (temp.length() == 11 && temp.charAt(0) == '0') {
             phoneNumber = temp;
-        }
-        else {
+        } else {
             System.out.println("Invalid Format! Try Again");
             setPhoneNumber();
         }
@@ -85,11 +105,19 @@ public abstract class Person {
 
     public void setFirstName() {
         System.out.print("First Name: ");
-        firstName = scanner.nextLine();
+        if (scanner.hasNextLine()) {
+            firstName = scanner.nextLine();
+        } else {
+            firstName = "";
+        }
     }
 
-    public void setLastName(){
+    public void setLastName() {
         System.out.print("Last Name: ");
-        lastName = scanner.nextLine();
+        if (scanner.hasNextLine()) {
+            lastName = scanner.nextLine();
+        } else {
+            lastName = "";
+        }
     }
 }
