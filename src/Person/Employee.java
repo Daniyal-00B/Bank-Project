@@ -1,5 +1,5 @@
 package Person;
-import Bank.Branch;
+
 public class Employee extends Person {
     private long employeeCode;
     private long salary;
@@ -48,4 +48,10 @@ public class Employee extends Person {
     //    public void printInfo(){
         public String fullName = getFirstName() + " " + getLastName();
     //}
+
+    public void resetEmployee(){
+        this.workplace = "";
+        this.salary = 0;
+        this.employeeCode = 0;
+    }
 }

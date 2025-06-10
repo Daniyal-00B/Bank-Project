@@ -90,6 +90,7 @@ public class Menu {
                 System.out.println("Login %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
         }
+        //bankList.get(11).branchList.get(22).getbranchManager().deleteEmployee(bankList.get(11));
     }
     static void signUp(){
         showAllBanks();
