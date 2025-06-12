@@ -1,4 +1,5 @@
 import Bank.Bank;
+import Person.Employee;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -81,13 +82,17 @@ public class Menu {
             System.out.println("Please Create a Bank First");
             return;
         }
-        System.out.print("Please Enter Your Code or Press + for Sign Up (0 for Exit): ");
+        System.out.print("Please Enter Your Code or Press + for Sign Up (0 for Exit): \n");
+        for (Employee employee : bankList.getFirst().branchList.getFirst().employeeList){
+        System.out.println(employee.getEmployeeCode());
+        }
         String choice = scanner.next();
         switch (choice){
             case "+" -> signUp();
             case "0" ->{}
-            default -> 
-                System.out.println("Login %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+            default -> {
+                login(choice);}
+//                System.out.println("Login %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 
         }
         //bankList.get(11).branchList.get(22).getbranchManager().deleteEmployee(bankList.get(11));
@@ -121,5 +126,28 @@ public class Menu {
         else {
             System.out.println("customer sign up %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
         }
+    }
+
+    static void login(String employeeCode) {
+        String[] part = employeeCode.split("\\.");
+        int employeeType = Integer.parseInt(part[0]);
+        int employeeBank = Integer.parseInt(part[1])-1;
+        int employeeBranch = Integer.parseInt(part[2])-1;
+        int employeeCount = Integer.parseInt(part[3])-1;
+        if (part.length == 4 &&
+                employeeType<3 && employeeType>0 &&
+                employeeBank<bankList.size() && employeeBank>=0 &&
+                employeeBranch<bankList.get(employeeBank).branchList.size() && employeeBranch>=0 &&
+                employeeCount<bankList.get(employeeBank).branchList.get(employeeBranch).employeeList.size() && employeeCount>=0
+        ) {
+            Employee employee = bankList.get(employeeBank).branchList.get(employeeBranch).employeeList.get(employeeCount);
+            if(employee.getEmployeeCode().equals(employeeCode)){
+                System.out.println("Hi " + employee.fullName);
+                employee.userMenu();
+            }
+            else {
+                System.out.println("invalid");
+            }
+        }else System.out.println("invalid EmployeeCode");
     }
 }
