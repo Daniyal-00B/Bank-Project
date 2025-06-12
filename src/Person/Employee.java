@@ -1,5 +1,5 @@
 package Person;
-import Bank.Branch;
+
 public class Employee extends Person {
     private String employeeCode;
     private long salary;
@@ -49,6 +49,11 @@ public class Employee extends Person {
         public String fullName = getFirstName() + " " + getLastName();
     //}
 
+
+    public void resetEmployee(){
+        this.workplace = "";
+        this.salary = 0;
+        this.employeeCode = 0;
     public void userMenu(){
         int role = Integer.parseInt(getEmployeeCode().substring(0,1));
         int range=1;
@@ -99,7 +104,5 @@ public class Employee extends Person {
                 default -> System.out.println("Invalid choice");
             }
         }
-
-
     }
 }
