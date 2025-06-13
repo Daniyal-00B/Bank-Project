@@ -1,17 +1,12 @@
-package Person;
-
-import java.util.Scanner;
-
 public abstract class Person {
     private String firstName, lastName;
     private String birthday;
     private String nationalCode;
     private String address;
     private String phoneNumber;
-    Scanner scanner = new Scanner(System.in);
 
-    public Person(int type){
-        switch (type){
+    public Person(int type) {
+        switch (type) {
             case 1 -> System.out.println("\nBranch Manager Info:");
             case 2 -> System.out.println("\nAssistant Manager Info:");
             case 3 -> System.out.println("\nPlease Enter Your Info:");
@@ -38,9 +33,8 @@ public abstract class Person {
 
     public void setBirthday() {
         System.out.print("Birthday: ");
-        if (scanner.hasNext()) {
-            birthday = scanner.next();
-            scanner.nextLine();
+        if (InputUtil.hasNext()) {
+            birthday = InputUtil.next();
         } else {
             birthday = "";
         }
@@ -52,9 +46,8 @@ public abstract class Person {
 
     public void setNationalCode() {
         System.out.print("National Code: ");
-        if (scanner.hasNext()) {
-            nationalCode = scanner.next();
-            scanner.nextLine();
+        if (InputUtil.hasNext()) {
+            nationalCode = InputUtil.next();
         } else {
             nationalCode = "";
         }
@@ -66,8 +59,8 @@ public abstract class Person {
 
     public void setAddress() {
         System.out.print("Address: ");
-        if (scanner.hasNextLine()) {
-            address = scanner.nextLine();
+        if (InputUtil.hasNext()) {
+            address = InputUtil.nextLine();
         } else {
             address = "";
         }
@@ -79,13 +72,12 @@ public abstract class Person {
 
     public void setPhoneNumber() {
         System.out.print("Phone Number: ");
-        if (!scanner.hasNext()) {
+        if (!InputUtil.hasNext()) {
             phoneNumber = "";
             return;
         }
 
-        String temp = scanner.next();
-        scanner.nextLine();
+        String temp = InputUtil.next();
 
         try {
             Long.parseLong(temp);
@@ -105,8 +97,8 @@ public abstract class Person {
 
     public void setFirstName() {
         System.out.print("First Name: ");
-        if (scanner.hasNextLine()) {
-            firstName = scanner.nextLine();
+        if (InputUtil.hasNext()) {
+            firstName = InputUtil.nextLine();
         } else {
             firstName = "";
         }
@@ -114,8 +106,8 @@ public abstract class Person {
 
     public void setLastName() {
         System.out.print("Last Name: ");
-        if (scanner.hasNextLine()) {
-            lastName = scanner.nextLine();
+        if (InputUtil.hasNext()) {
+            lastName = InputUtil.nextLine();
         } else {
             lastName = "";
         }

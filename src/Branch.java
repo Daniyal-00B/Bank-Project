@@ -1,10 +1,3 @@
-package Bank;
-
-import Account.Account;
-import Person.AssistantManager;
-import Person.BranchManager;
-import Person.Employee;
-import Person.Teller;
 import java.util.ArrayList;
 
 public class Branch extends Bank{

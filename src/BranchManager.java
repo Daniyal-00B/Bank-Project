@@ -1,7 +1,3 @@
-package Person;
-
-import Bank.Branch;
-
 public class BranchManager extends Employee {
 
     public BranchManager(String workPlace, int bankCode, int branchCode){

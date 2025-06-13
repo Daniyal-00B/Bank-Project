@@ -1,7 +1,3 @@
-package Person;
-
-import Account.Account;
-
 import java.util.ArrayList;
 
 public class Customer{

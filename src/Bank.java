@@ -1,7 +1,3 @@
-package Bank;
-
-import Person.Customer;
-import Person.Employee;
 import java.util.ArrayList;
 
 public class Bank {
@@ -41,7 +37,7 @@ public class Bank {
     public void displayEmployeeList(){
         System.out.println(employeeList.size());
         for (int i=0;i<employeeList.size();i++) {
-            System.out.println("[" + (i+1) + "] " + employeeList.get(i).fullName);
+            //System.out.println("[" + (i+1) + "] " + employeeList.get(i).fullName);
         }
     }
     public void displayCustomerList(){}
