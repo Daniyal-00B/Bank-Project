@@ -13,24 +13,15 @@ public class Bank {
         branchList.add(new Branch(bankName, bankCode));
         this.bankCode = bankCode;
     }
-
-    public String getBankName() {
-        return bankName;
-    }
-
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
-    }
-
     public void createBranch(){
         System.out.println("New Branch Created!🎉");
-
         branchList.add(new Branch(getBankName(), bankCode));
     }
     public void addEmployee(Employee employee){
         employeeList.add(employee);
     }
     public void displayBranchList(){
+        System.out.println("\n***** Branches List *****");
         for (int i=0; i<branchList.size();i++)
             System.out.println("["+ (i+1) + "] " + branchList.get(i).getBranchFullName());
     }
@@ -42,4 +33,13 @@ public class Bank {
     }
     public void displayCustomerList(){}
 
+    //**************************  (SETTERS)  ************************
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    //**************************  (GETTERS)  ************************
+    public String getBankName() {
+        return bankName;
+    }
 }

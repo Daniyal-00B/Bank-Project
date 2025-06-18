@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Menu {
     public static ArrayList<Bank> bankList = new ArrayList<>();
-    public static int bankCounter = 0;
+    public static ArrayList<Customer> customers = new ArrayList<>();
 
     public static void MainMenu() {
         int choice;
@@ -11,7 +11,7 @@ public class Menu {
                 ***********(<<  BANK PROJECT  >>)***********
                 1. Create Bank
                 2. Login/Sign Up
-                Choose a Number:""" + " ";
+                Choose a Number (0 for Exit):""" + " ";
 
         do {
             System.out.print(Menu);
@@ -42,9 +42,9 @@ public class Menu {
                     if (bankName.isEmpty()) System.out.print("Bank Name Can Not Be Empty!\nEnter the Bank Name: ");
                 } while (bankName.isEmpty());
                 System.out.println("\nCreating The First Branch for Bank");
-                bankList.add(new Bank(bankName, bankCounter));
-                bankCounter++;
-                System.out.println("Bank Created!🎉\n");
+                int bankUniCode = bankList.size();
+                bankList.add(new Bank(bankName, bankUniCode));
+                System.out.println("Bank Created!🎉🎉🎉\n");
             }
             case "0" -> {}
             default -> {
@@ -52,7 +52,7 @@ public class Menu {
                 try {
                     selectedBank = Integer.parseInt(choice);
                 } catch (Exception _) {
-                    System.out.println("Invalid Choice!🤬");
+                    System.out.println("Invalid Choice!");
                 }
                 selectedBank -= 1;
                 if (selectedBank < 0 || selectedBank >= bankList.size())
@@ -60,13 +60,6 @@ public class Menu {
                 else
                     bankList.get(selectedBank).createBranch();
             }
-        }
-    }
-
-    static void showAllBanks() {
-        System.out.println("\n***** All Banks List *****");
-        for (int i = 0; i < bankList.size(); i++) {
-            System.out.println("[" + (i + 1) + "] " + bankList.get(i).getBankName());
         }
     }
 
@@ -83,9 +76,11 @@ public class Menu {
         switch (choice) {
             case "+" -> signUp();
             case "0" -> {}
-            default -> login(choice);
+            default -> login();
         }
     }
+
+    static void login() {}
 
     static void signUp() {
         showAllBanks();
@@ -93,14 +88,12 @@ public class Menu {
         int selectedBank = InputUtil.nextInt() - 1;
         if (selectedBank < 0 || selectedBank >= bankList.size()) {
             System.out.println("Invalid Choice! Try Again");
-            signUp();
         }
         bankList.get(selectedBank).displayBranchList();
         System.out.print("Please Select a Branch: ");
         int selectedBranch = InputUtil.nextInt() - 1;
         if (selectedBranch < 0 || selectedBranch >= bankList.get(selectedBank).branchList.size()) {
             System.out.println("Invalid Choice! Try Again");
-            signUp();
         }
         System.out.print("\n[1] Employee\n[2] Customer\nPlease Select Your Role: ");
         int type;
@@ -112,31 +105,15 @@ public class Menu {
             bankList.get(selectedBank).branchList.get(selectedBranch).addTeller(workPlace, 3, selectedBank, selectedBranch);
             bankList.get(selectedBank).branchList.get(selectedBranch).addEmployee(bankList.get(selectedBank).branchList.get(selectedBranch).getLastTeller());
         } else {
-            System.out.println("customer sign up %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+            int uniCode = customers.size();
+            customers.add(new Customer(selectedBank, selectedBranch, uniCode));
         }
     }
 
-    static void login(String employeeCode) {
-        String[] part = employeeCode.split("\\.");
-        int employeeType = Integer.parseInt(part[0]);
-        int employeeBank = Integer.parseInt(part[1]) - 1;
-        int employeeBranch = Integer.parseInt(part[2]) - 1;
-        int employeeCount = Integer.parseInt(part[3]) - 1;
-        if (part.length == 4 &&
-                employeeType < 3 && employeeType > 0 &&
-                employeeBank < bankList.size() && employeeBank >= 0 &&
-                employeeBranch < bankList.get(employeeBank).branchList.size() && employeeBranch >= 0 &&
-                employeeCount < bankList.get(employeeBank).branchList.get(employeeBranch).employeeList.size() && employeeCount >= 0
-        ) {
-            Employee employee = bankList.get(employeeBank).branchList.get(employeeBranch).employeeList.get(employeeCount);
-            if (employee.getEmployeeCode().equals(employeeCode)) {
-                System.out.println("Hi " + employee.fullName);
-                employee.userMenu();
-            } else {
-                System.out.println("invalid");
-            }
-        } else {
-            System.out.println("invalid EmployeeCode");
+    public static void showAllBanks() {
+        System.out.println("\n***** All Banks List *****");
+        for (int i = 0; i < bankList.size(); i++) {
+            System.out.println("[" + (i + 1) + "] " + bankList.get(i).getBankName());
         }
     }
 }

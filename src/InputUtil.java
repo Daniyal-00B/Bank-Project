@@ -9,10 +9,9 @@ public class InputUtil {
 
     static {
         try {
-            File inputFile = new File("E:\\TestCase.txt");
+            File inputFile = new File("TestCase.txt");
             scanner = new Scanner(inputFile);
         } catch (FileNotFoundException e) {
-            System.out.println("TestCase.txt not found, using console input.");
             scanner = new Scanner(System.in);
             usingFile = false;
         }
@@ -22,13 +21,11 @@ public class InputUtil {
         if (usingFile) {
             try {
                 if (!scanner.hasNext()) { // Check if file has more input
-                    System.out.println("\nEnd of file reached, switching to console input: ");
                     scanner.close();
                     scanner = new Scanner(System.in);
                     usingFile = false;
                 }
             } catch (IllegalStateException e) {
-                System.out.println("Scanner error, switching to console input.");
                 scanner.close();
                 scanner = new Scanner(System.in);
                 usingFile = false;

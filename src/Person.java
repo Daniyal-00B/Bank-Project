@@ -18,19 +18,18 @@ public abstract class Person {
         setAddress();
         setPhoneNumber();
     }
+    abstract void userMenu();
+    abstract void mailBox();
 
-    public String getLastName() {
-        return lastName;
+    //**************************  (SETTERS)  ************************
+    public void setFirstName() {
+        System.out.print("First Name: ");
+        firstName = InputUtil.nextLine();
     }
-
-    public String getFirstName() {
-        return firstName;
+    public void setLastName() {
+        System.out.print("Last Name: ");
+        lastName = InputUtil.nextLine();
     }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
     public void setBirthday() {
         System.out.print("Birthday: ");
         if (InputUtil.hasNext()) {
@@ -39,11 +38,6 @@ public abstract class Person {
             birthday = "";
         }
     }
-
-    public String getNationalCode() {
-        return nationalCode;
-    }
-
     public void setNationalCode() {
         System.out.print("National Code: ");
         if (InputUtil.hasNext()) {
@@ -52,11 +46,6 @@ public abstract class Person {
             nationalCode = "";
         }
     }
-
-    public String getAddress() {
-        return address;
-    }
-
     public void setAddress() {
         System.out.print("Address: ");
         if (InputUtil.hasNext()) {
@@ -65,11 +54,6 @@ public abstract class Person {
             address = "";
         }
     }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
     public void setPhoneNumber() {
         System.out.print("Phone Number: ");
         if (!InputUtil.hasNext()) {
@@ -95,21 +79,23 @@ public abstract class Person {
         }
     }
 
-    public void setFirstName() {
-        System.out.print("First Name: ");
-        if (InputUtil.hasNext()) {
-            firstName = InputUtil.nextLine();
-        } else {
-            firstName = "";
-        }
+    //**************************  (GETTERS)  ************************
+    public String getFirstName() {
+        return firstName;
     }
-
-    public void setLastName() {
-        System.out.print("Last Name: ");
-        if (InputUtil.hasNext()) {
-            lastName = InputUtil.nextLine();
-        } else {
-            lastName = "";
-        }
+    public String getLastName() {
+        return lastName;
+    }
+    public String getBirthday() {
+        return birthday;
+    }
+    public String getNationalCode() {
+        return nationalCode;
+    }
+    public String getAddress() {
+        return address;
+    }
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 }

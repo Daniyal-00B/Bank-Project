@@ -1,2 +1,2 @@
-public class LoanAccount extends Account{
+public class ActiveAccount extends Account{
 }

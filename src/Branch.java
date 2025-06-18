@@ -17,48 +17,39 @@ public class Branch extends Bank{
         setAssistantManager(branchFullName, bankCode, getBranchNumber()-1);
         addEmployee(assistantManager);
     }
-
-
-
-    public int getBranchNumber() {
-        return branchNumber;
+    public void addTeller(String workPlace, int type, int bankCode, int branchCode){
+        tellerList.add(new Teller(workPlace, type, bankCode, branchCode));
     }
+    public void removeEmployee(){}
+    public void searchEmployee(){}
 
+    //**************************  (SETTERS)  ************************
     public void setBranchNumber() {
         branchCount++;
         branchNumber = branchCount;
     }
-
-    public BranchManager getbranchManager() {
-        return branchManager;
-    }
-
     public void setBranchManager(String workPlace, int bankCode, int branchCode) {
         branchManager = new BranchManager(workPlace, bankCode, branchCode);
 
     }
-
-    public AssistantManager getBranchAssistant() {
-        return assistantManager;
-    }
-
     public void setAssistantManager(String workPlace, int bankCode, int branchCode) {
         assistantManager = new AssistantManager(workPlace, bankCode, branchCode);
     }
 
-    public void removeEmployee(){}
-    public void searchEmployee(){}
-
+    //**************************  (GETTERS)  ************************
+    public int getBranchNumber() {
+        return branchNumber;
+    }
+    public BranchManager getbranchManager() {
+        return branchManager;
+    }
+    public AssistantManager getBranchAssistant() {
+        return assistantManager;
+    }
     public String getBranchFullName() {
         return branchFullName;
     }
-
-    public void addTeller(String workPlace, int type, int bankCode, int branchCode){
-        tellerList.add(new Teller(workPlace, type, bankCode, branchCode));
-    }
-
     public Teller getLastTeller(){
         return tellerList.getLast();
     }
-
 }
