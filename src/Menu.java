@@ -41,10 +41,10 @@ public class Menu {
                     bankName = InputUtil.nextLine();
                     if (bankName.isEmpty()) System.out.print("Bank Name Can Not Be Empty!\nEnter the Bank Name: ");
                 } while (bankName.isEmpty());
-                System.out.println("\nCreating The First Branch for Bank");
                 int bankUniCode = bankList.size();
                 bankList.add(new Bank(bankName, bankUniCode));
-                System.out.println("Bank Created!🎉🎉🎉\n");
+                System.out.println("\nCreating The First Branch for Bank");
+                bankList.get(bankUniCode).createBranch();
             }
             case "0" -> {}
             default -> {
@@ -69,29 +69,58 @@ public class Menu {
             return;
         }
         System.out.print("Please Enter Your Code or Press + for Sign Up (0 for Exit): \n");
-        for (Employee employee : bankList.getFirst().branchList.getFirst().employeeList) {
+        //############################################ TEST #####################################################
+        for (Employee employee : bankList.get(1).branchList.getFirst().employeeList) {
             System.out.println(employee.getEmployeeCode());
         }
+        //############################################ TEST #####################################################
         String choice = InputUtil.next();
         switch (choice) {
             case "+" -> signUp();
             case "0" -> {}
-            default -> login();
+            default -> login(choice);
         }
     }
 
-    static void login() {}
+    static void login(String input) {
+        int code;
+        try {
+            code = Integer.parseInt(input);
+        } catch (Exception _) {
+            System.out.println("Code Must Be Number!");
+            return;
+        }
+        Person user;
+        int type = code/1000000;
+        try {
+            if (type == 4){
+                user = customers.get(code%100);
+            }
+            else {
+                code%=1000000;
+                int bankCode = (code/10000)-1;
+                code%=10000;
+                int branchCode = (code/100)-1;
+                int employeeUniCode = code%100;
+                user = bankList.get(bankCode).branchList.get(branchCode).employeeList.get(employeeUniCode);
+            }
+        } catch (Exception _) {
+            System.out.println("Incorrect Code! Try Again");
+            return;
+        }
+        user.userMenu();
+    }
 
     static void signUp() {
         showAllBanks();
         System.out.print("Select a Bank: ");
-        int selectedBank = InputUtil.nextInt() - 1;
+        int selectedBank = InputUtil.nextInt() -1;
         if (selectedBank < 0 || selectedBank >= bankList.size()) {
             System.out.println("Invalid Choice! Try Again");
         }
         bankList.get(selectedBank).displayBranchList();
         System.out.print("Please Select a Branch: ");
-        int selectedBranch = InputUtil.nextInt() - 1;
+        int selectedBranch = InputUtil.nextInt() -1;
         if (selectedBranch < 0 || selectedBranch >= bankList.get(selectedBank).branchList.size()) {
             System.out.println("Invalid Choice! Try Again");
         }
@@ -102,14 +131,12 @@ public class Menu {
         } while (type != 1 && type != 2);
         if (type == 1) {
             String workPlace = bankList.get(selectedBank).getBankName();
-            bankList.get(selectedBank).branchList.get(selectedBranch).addTeller(workPlace, 3, selectedBank, selectedBranch);
-            bankList.get(selectedBank).branchList.get(selectedBranch).addEmployee(bankList.get(selectedBank).branchList.get(selectedBranch).getLastTeller());
+            bankList.get(selectedBank).branchList.get(selectedBranch).addTeller(workPlace, selectedBank, selectedBranch);
         } else {
             int uniCode = customers.size();
             customers.add(new Customer(selectedBank, selectedBranch, uniCode));
         }
     }
-
     public static void showAllBanks() {
         System.out.println("\n***** All Banks List *****");
         for (int i = 0; i < bankList.size(); i++) {

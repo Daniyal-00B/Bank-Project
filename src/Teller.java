@@ -1,14 +1,15 @@
 public class Teller extends Employee{
-    public Teller(String workPlace, int type, int bankCode, int branchCode){
-        super(workPlace, type, bankCode, branchCode);
+    public Teller(String workPlace, int bankCode, int branchCode, int employeeUniCode){
+        super(workPlace, 3, bankCode, branchCode, employeeUniCode);
     }
     @Override
     public void userMenu(){
-        System.out.println("\n$$$$$$$$$$$$$$ (Welcome Back) $$$$$$$$$$$$$$");
+        System.out.print("\n$$$$$$$$$$$$$$$ (Welcome Back) $$$$$$$$$$$$$$$");
         do {
             String choice;
-            System.out.println("\n^^^^^^^^^^( Teller Menu )^^^^^^^^^^");
-            System.out.println("""
+            System.out.println("\n^^^^^^^^^^^^^^^^( Teller Menu )^^^^^^^^^^^^^^^^\n" + getWorkplace());
+            System.out.print("""
+                    
                     1. See Mail Box
                     2. Accept Requests
                     Choose a Number (0 for Logout):""" + " "

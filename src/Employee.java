@@ -1,17 +1,15 @@
 public class Employee extends Person {
-    private String employeeCode;
+    private long employeeCode;
     private long salary;
     private String workplace;
-    private static int employeeCounter = 0;
 
-    public Employee(String workplace, int type, int bankCode, int branchCode) {
+    public Employee(String workplace, int type, int bankCode, int branchCode, int employeeUniCode) {
         super(type);
-        setEmployeeCode(type, bankCode, branchCode);
+        setEmployeeCode(type, bankCode, branchCode, employeeUniCode);
         setSalary();
         setWorkplace(workplace);
     }
     public void userMenu(){};
-    public void mailBox(){};
     public void history() {}
     public void handlingRequests() {}
     public String fullName = getFirstName() + " " + getLastName();
@@ -24,11 +22,10 @@ public class Employee extends Person {
         System.out.print("Salary: ");
         salary = InputUtil.nextInt();
     }
-    public void setEmployeeCode(int type, int bankCode, int branchCode) {
-        employeeCounter++;
+    public void setEmployeeCode(int type, int bankCode, int branchCode, int employeeUniCode) {
         bankCode++;
         branchCode++;
-        employeeCode = type + "" + bankCode + branchCode + employeeCounter;
+        employeeCode = (long)type*1000000 + (long)bankCode*10000 + (long)branchCode*100 + employeeUniCode;
     }
 
     //**************************  (GETTERS)  ************************
@@ -38,7 +35,7 @@ public class Employee extends Person {
     public long getSalary() {
         return salary;
     }
-    public String getEmployeeCode() {
+    public long getEmployeeCode() {
         return employeeCode;
     }
 }

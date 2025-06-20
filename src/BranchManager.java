@@ -1,14 +1,18 @@
 public class BranchManager extends Employee {
-    public BranchManager(String workPlace, int bankCode, int branchCode){
-        super(workPlace,1, bankCode, branchCode);
+    private int bankCode, branchCode;
+    public BranchManager(String workPlace, int bankCode, int branchCode, int employeeUniCode){
+        super(workPlace,1, bankCode, branchCode, employeeUniCode);
+        this.bankCode = bankCode;
+        this.branchCode = branchCode;
     }
     @Override
     public void userMenu(){
-        System.out.println("\n$$$$$$$$$$$$$$ (Welcome Back) $$$$$$$$$$$$$$");
+        System.out.print("\n$$$$$$$$$$$$$$$ (Welcome Back) $$$$$$$$$$$$$$$");
         do {
             String choice;
-            System.out.println("\n^^^^^^^^^^( Branch Manager Menu )^^^^^^^^^^");
-            System.out.println("""
+            System.out.println("\n^^^^^^^^^^^^( Branch Manager Menu )^^^^^^^^^^^^\n" + getWorkplace());
+            System.out.print("""
+                    
                     1. See Mail Box
                     2. Accept Requests
                     3. Receive Employee List
@@ -30,6 +34,8 @@ public class BranchManager extends Employee {
         }while (true);
     }
     public void acceptRequests(){}
-    public void receiveEmployeeList(){}
+    public void receiveEmployeeList(){
+        Menu.bankList.get(bankCode).branchList.get(branchCode).displayEmployeeList();
+    }
     public void closeAccount(){}
 }

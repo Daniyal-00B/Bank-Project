@@ -1,24 +1,26 @@
 import java.util.ArrayList;
 
 public class Customer extends Person{
-    private int id;
+    private long id;
     ArrayList<Account> accountList = new ArrayList<>();
+
 
     public Customer(int bankCode, int branchCode, int uniCode){
         super(3);
         setId(uniCode);
         System.out.println("You Are Signed Up 🎉");
         System.out.println("""
+                
                 Please Fill This Form To Create Your First Account
                 --------------------------------------------------""");
-        createAccount();
+        createAccount(bankCode, branchCode);
     }
     public void userMenu(){
-        System.out.println("\n$$$$$$$$$$$$$$ (Welcome Back) $$$$$$$$$$$$$$");
+        System.out.print("    \n$$$$$$$$$$$$$$ (Welcome Back) $$$$$$$$$$$$$$");
         do {
             String choice;
-            System.out.println("\n^^^^^^^^^^( Customer Menu )^^^^^^^^^^");
-            System.out.println("""
+            System.out.println("\n^^^^^^^^^^^^^^( Customer Menu )^^^^^^^^^^^^^^\n");
+            System.out.print("""
                     1. See Mail Box
                     2. Create Account
                     3. Close Account
@@ -45,29 +47,32 @@ public class Customer extends Person{
             }
         }while (true);
     }
-    public void mailBox(){}
+
     public void createAccount(int bankCode, int branchCode){
         System.out.print("""
                 
-                Account Type
+                ****( Account Type )****
                 1. Active Account
                 2. Current Account
                 3. Short Term Account
                 Choose a Number (0 for Exit):""" + " ");
         int choice = InputUtil.nextInt();
         switch (choice){
-            case 1 -> {}
-            case 2 -> {}
-            case 3 -> {}
+            case 1 -> accountList.add(new ActiveAccount(bankCode, branchCode));
+            case 2 -> accountList.add(new CurrentAccount(bankCode, branchCode));
+            case 3 -> accountList.add(new ShortTermAccount(bankCode, branchCode));
             case 0 -> {}
             default -> {
                 System.out.println("Invalid Choice! Try Again");
                 createAccount(bankCode, branchCode);
             }
         }
+        System.out.println("Your Account Successfully Created!");
+        accountList.getLast().displayAccountInfo();
     }
     public void createAccount(){
         System.out.println("""
+        
         Please Fill This Form To Create an Account
         ------------------------------------------""");
         Menu.showAllBanks();
@@ -84,16 +89,48 @@ public class Customer extends Person{
         }
         createAccount(selectedBank, selectedBranch);
     }
-    public void closeAccount(){}
-    public void displayAccountList(){}
+    public void closeAccount(){
+        displayAccountList();
+        System.out.print("\nWhich Account Do You Wanna Close? ");
+        int selectedAccount = InputUtil.nextInt()-1;
+        if (accountList.get(selectedAccount).getBalance()!=0) {
+            System.out.print("\nYou Have " + accountList.get(selectedAccount).getBalance() + "$ in This Account" +
+                    " by Closing This Account Your Money Will be Gone!\n" +
+                    "Continue? (Y or N): ");
+            String yesOrNo = InputUtil.next();
+            yesOrNo = yesOrNo.toUpperCase();
+            if (yesOrNo.equals("Y")) {
+                System.out.println("Your Selected Account Closed...");
+            } else {
+                System.out.println("Account Does not Closed");
+                return;
+            }
+        }
+        accountList.remove(selectedAccount);
+    }
+    public void displayAccountList(){
+        if (accountList.isEmpty()) {
+            System.out.println("You Have No Account");
+            return;
+        }
+        for (int i=0 ; i<accountList.size() ; i++) {
+            System.out.println("\n[" + (i+1) + "]*************************");
+            accountList.get(i).displayAccountInfo();
+        }
+    }
     public void statusReport(){}
-    public void searchAccount(){}
-    public void loan(){}
+    public void searchAccount(){
+        System.out.print("\nPlease Enter Your Account Bank Name or Account Type\nSearch: ");
+        String search = InputUtil.nextLine();
+    }
+    public void loan(){
+        mails.add("Your Loan Request Send to Bank");
+    }
 
     public void setId(int unicode) {
-        id = 4000 + unicode;
+        id = 4000000 + unicode;
     }
-    public int getId() {
+    public long getId() {
         return id;
     }
 }

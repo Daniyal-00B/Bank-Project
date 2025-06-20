@@ -1,9 +1,12 @@
+import java.util.ArrayList;
+
 public abstract class Person {
     private String firstName, lastName;
     private String birthday;
     private String nationalCode;
     private String address;
     private String phoneNumber;
+    public ArrayList<String> mails = new ArrayList<>();
 
     public Person(int type) {
         switch (type) {
@@ -19,7 +22,16 @@ public abstract class Person {
         setPhoneNumber();
     }
     abstract void userMenu();
-    abstract void mailBox();
+    public void mailBox(){
+        if (mails.isEmpty())
+            System.out.println("\nYour Mail Box is Empty");
+        else {
+            for (int i=mails.size()-1 ; i>=0 ; i--)
+                System.out.println("\n------------------------------------------------------------\n"
+                                  + mails.get(i) +
+                                   "\n------------------------------------------------------------");
+        }
+    }
 
     //**************************  (SETTERS)  ************************
     public void setFirstName() {

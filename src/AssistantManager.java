@@ -1,14 +1,15 @@
 public class AssistantManager extends Employee{
-    public AssistantManager(String workPlace, int bankCode, int branchCode){
-        super(workPlace, 2, bankCode, branchCode);
+    public AssistantManager(String workPlace, int bankCode, int branchCode, int employeeUniCode){
+        super(workPlace, 2, bankCode, branchCode, employeeUniCode);
     }
     @Override
     public void userMenu(){
-        System.out.println("\n$$$$$$$$$$$$$$ (Welcome Back) $$$$$$$$$$$$$$");
+        System.out.print("\n$$$$$$$$$$$$$$$ (Welcome Back) $$$$$$$$$$$$$$$");
         do {
             String choice;
-            System.out.println("\n^^^^^^^^^^( Assistant Manager Menu )^^^^^^^^^^");
-            System.out.println("""
+            System.out.println("\n^^^^^^^^^^( Assistant Manager Menu )^^^^^^^^^^\n" + getWorkplace());
+            System.out.print("""
+                    
                     1. See Mail Box
                     2. Accept Requests
                     Choose a Number (0 for Logout):""" + " "
