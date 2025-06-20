@@ -25,7 +25,7 @@ public class Employee extends Person {
     public void setEmployeeCode(int type, int bankCode, int branchCode, int employeeUniCode) {
         bankCode++;
         branchCode++;
-        employeeCode = (long)type*1000000 + (long)bankCode*10000 + (long)branchCode*100 + employeeUniCode;
+        employeeCode = (long)type*1000000 + (long)bankCode*10000 + (long)branchCode*100 + employeeUniCode+1;
     }
 
     //**************************  (GETTERS)  ************************

@@ -4,11 +4,11 @@ public abstract class Account {
     private String type;
     private String bankName;
 
-    public Account(int bankCode, int branchCode, String type){
-        setNumber(bankCode+1, branchCode+1);
+    public Account(int bankCode, int branchCode, long accountUniCode, String type){
+        setType(type);
+        setNumber(bankCode, branchCode, accountUniCode);
         bankName = Menu.bankList.get(bankCode).getBankName();
         setBalance();
-        setType(type);
     }
     public void moneyTransport(){}
     public void deposit(){}
@@ -22,8 +22,8 @@ public abstract class Account {
     }
 
     //**************************  (SETTERS)  ************************
-    public void setNumber(int bankCode, int branchCode) {
-        number = bankCode + "" + branchCode + "00 0000 0000 0000";
+    public void setNumber(int bankCode, int branchCode, long accountUniCode) {
+        number = (bankCode+1001) + " " + (branchCode+1001) + " " + getType().length()*493 + " " + (accountUniCode+1001);
     }
     public void setBalance() {
         System.out.print("Please Charge Your Account ($): ");

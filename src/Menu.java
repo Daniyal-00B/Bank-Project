@@ -94,14 +94,14 @@ public class Menu {
         int type = code/1000000;
         try {
             if (type == 4){
-                user = customers.get(code%100);
+                user = customers.get(code%100-1);
             }
             else {
                 code%=1000000;
                 int bankCode = (code/10000)-1;
                 code%=10000;
                 int branchCode = (code/100)-1;
-                int employeeUniCode = code%100;
+                int employeeUniCode = (code%100)-1;
                 user = bankList.get(bankCode).branchList.get(branchCode).employeeList.get(employeeUniCode);
             }
         } catch (Exception _) {

@@ -57,10 +57,11 @@ public class Customer extends Person{
                 3. Short Term Account
                 Choose a Number (0 for Exit):""" + " ");
         int choice = InputUtil.nextInt();
+        long accountUniCode = (getId()%1000000)*100+accountList.size();
         switch (choice){
-            case 1 -> accountList.add(new ActiveAccount(bankCode, branchCode));
-            case 2 -> accountList.add(new CurrentAccount(bankCode, branchCode));
-            case 3 -> accountList.add(new ShortTermAccount(bankCode, branchCode));
+            case 1 -> accountList.add(new ActiveAccount(bankCode, branchCode, accountUniCode));
+            case 2 -> accountList.add(new CurrentAccount(bankCode, branchCode, accountUniCode));
+            case 3 -> accountList.add(new ShortTermAccount(bankCode, branchCode, accountUniCode));
             case 0 -> {}
             default -> {
                 System.out.println("Invalid Choice! Try Again");
@@ -128,7 +129,7 @@ public class Customer extends Person{
     }
 
     public void setId(int unicode) {
-        id = 4000000 + unicode;
+        id = 4000000 + unicode + 1;
     }
     public long getId() {
         return id;
