@@ -25,9 +25,7 @@ public class Branch{
     public void displayEmployeeList(){
         System.out.println("\nBranch Assistant");
         for (int i=1;i<employeeList.size();i++)
-            System.out.println("[" + (i) + "] " + employeeList.get(i).fullName +
-                               "\nCode: " + employeeList.get(i).getEmployeeCode() +
-                               "\n-----------------------------------------------");
+            employeeList.get(i).employeeInfo();
         System.out.println("Number of Employees: " + (employeeList.size()-1));
     }
     public void removeEmployee(){}

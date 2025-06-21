@@ -1,7 +1,8 @@
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Customer extends Person{
-    private long id;
+    private int id;
     ArrayList<Account> accountList = new ArrayList<>();
 
 
@@ -68,7 +69,8 @@ public class Customer extends Person{
                 createAccount(bankCode, branchCode);
             }
         }
-        System.out.println("Your Account Successfully Created!");
+        System.out.println("\nYour Account Successfully Created!\n");
+        Menu.bankList.get(bankCode).customerList.add(getId());
         accountList.getLast().displayAccountInfo();
     }
     public void createAccount(){
@@ -122,16 +124,42 @@ public class Customer extends Person{
     public void statusReport(){}
     public void searchAccount(){
         System.out.print("\nPlease Enter Your Account Bank Name or Account Type\nSearch: ");
-        String search = InputUtil.nextLine();
+        String search = InputUtil.nextLine().toLowerCase(Locale.ROOT);
+        System.out.println();
+        int resultCount = 0;
+        if (search.contains("account")) {
+            for (Account i : accountList) {
+                if (i.getType().equalsIgnoreCase(search.trim())) {
+                    i.displayAccountInfo();
+                    resultCount++;
+                }
+            }
+            if (resultCount==0) System.out.print("\nYou have No Account in This Type");
+            System.out.println("\nNumber of Results: " + resultCount + "\n");
+        }
+        else {
+            for (Account i : accountList) {
+                if (i.getBankName().equalsIgnoreCase(search.trim())) {
+                    i.displayAccountInfo();
+                    resultCount++;
+                }
+            }
+            if (resultCount==0) System.out.print("\nYou have No Account in This Type");
+            System.out.println("\nNumber of Results: " + resultCount + "\n");
+        }
     }
     public void loan(){
         mails.add("Your Loan Request Send to Bank");
+    }
+    public void customerInfo() {
+        System.out.println("\n" + getFirstName() + " " + getLastName() + "\nAddress: " + getAddress()
+                            + "\nID: " + getId() + "\n---------------------------------------");
     }
 
     public void setId(int unicode) {
         id = 4000000 + unicode + 1;
     }
-    public long getId() {
+    public int getId() {
         return id;
     }
 }

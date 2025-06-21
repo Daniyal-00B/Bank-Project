@@ -12,7 +12,12 @@ public class Employee extends Person {
     public void userMenu(){};
     public void history() {}
     public void handlingRequests() {}
-    public String fullName = getFirstName() + " " + getLastName();
+    public void employeeInfo() {
+        System.out.println(getFirstName() + " " + getLastName() +
+                "\nAddress: " + getAddress() + "\nCode: " + getEmployeeCode() +
+                "\n-----------------------------------------------");
+    }
+
 
     //**************************  (SETTERS)  ************************
     public void setWorkplace(String workplace) {
