@@ -60,9 +60,9 @@ public class Customer extends Person{
         int choice = InputUtil.nextInt();
         long accountUniCode = (getId()%1000000)*100+accountList.size();
         switch (choice){
-            case 1 -> accountList.add(new ActiveAccount(bankCode, branchCode, accountUniCode));
-            case 2 -> accountList.add(new CurrentAccount(bankCode, branchCode, accountUniCode));
-            case 3 -> accountList.add(new ShortTermAccount(bankCode, branchCode, accountUniCode));
+            case 1 -> accountList.add(new ActiveAccount(bankCode, branchCode, accountUniCode, getFirstName()+ " " + getLastName()));
+            case 2 -> accountList.add(new CurrentAccount(bankCode, branchCode, accountUniCode, getFirstName()+ " " + getLastName()));
+            case 3 -> accountList.add(new ShortTermAccount(bankCode, branchCode, accountUniCode, getFirstName()+ " " + getLastName()));
             case 0 -> {}
             default -> {
                 System.out.println("Invalid Choice! Try Again");

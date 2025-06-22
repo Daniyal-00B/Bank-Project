@@ -5,24 +5,26 @@ public class Menu {
     public static ArrayList<Customer> customers = new ArrayList<>();
 
     public static void MainMenu() {
-        int choice;
+        String choice;
         String Menu = """
                 
                 ***********(<<  BANK PROJECT  >>)***********
                 1. Create Bank
                 2. Login/Sign Up
+                3. Bank Jobs
                 Choose a Number (0 for Exit):""" + " ";
 
         do {
             System.out.print(Menu);
-            choice = InputUtil.nextInt();
+            choice = InputUtil.next();
             switch (choice) {
-                case 1 -> createBank();
-                case 2 -> login_signup();
-                case 0 -> System.out.println("Program Ended...");
+                case "1" -> createBank();
+                case "2" -> login_signup();
+                case "3" -> bankJobs();
+                case "0" -> System.out.println("Program Ended...");
                 default -> System.out.println("Invalid Choice!");
             }
-        } while (choice != 0);
+        } while (!(choice.equals("0")));
         InputUtil.closeScanner();
     }
 
@@ -137,10 +139,45 @@ public class Menu {
             customers.add(new Customer(selectedBank, selectedBranch, uniCode));
         }
     }
+
+    static void bankJobs() {
+        System.out.print("\nEnter Your Account Number: ");
+        String accountNumber = InputUtil.nextLine();
+        int accountIndex = checkAccount(accountNumber);
+        if (accountIndex==-1)
+            System.out.println("\nInvalid Number Try Again");
+        else {
+            Account account = customers.get((accountIndex/100)-1).accountList.get(accountIndex%100);
+            account.bankOperation();
+        }
+    }
+
     public static void showAllBanks() {
         System.out.println("\n***** All Banks List *****");
         for (int i = 0; i < bankList.size(); i++) {
             System.out.println("[" + (i + 1) + "] " + bankList.get(i).getBankName());
         }
+    }
+
+    public static int checkAccount(String account) {
+        int temp;
+        Account validAccount;
+        String checkPart;
+        try {
+            checkPart = account.substring(account.length()-8);
+            temp = Integer.parseInt(checkPart.replace(" ", ""));
+        } catch (Exception _) {
+            return -1;
+        }
+        temp = (temp%10000)-1001;
+        try {
+            validAccount = customers.get((temp/100)-1).accountList.get(temp%100);
+        } catch (Exception _) {
+            return -1;
+        }
+        if (Long.parseLong(account.replace(" ", ""))!=Long.parseLong(validAccount.getNumber().replace(" ", ""))) {
+            return -1;
+        }
+        return temp;
     }
 }

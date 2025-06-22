@@ -48,6 +48,21 @@ public class InputUtil {
         }
     }
 
+    public static double nextDouble() {
+        switchToConsoleIfNeeded();
+        try {
+            double result = scanner.nextDouble();
+            scanner.nextLine(); // Clear buffer after reading int
+            return result;
+        } catch (NoSuchElementException | IllegalStateException e) {
+            if (usingFile) {
+                switchToConsoleIfNeeded();
+                return scanner.nextDouble(); // Retry once after switching
+            }
+            throw new RuntimeException("Failed to read integer input", e);
+        }
+    }
+
     public static String next() {
         switchToConsoleIfNeeded();
         try {
