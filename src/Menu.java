@@ -110,7 +110,8 @@ public class Menu {
             System.out.println("Incorrect Code! Try Again");
             return;
         }
-        user.userMenu();
+        if (user==null) System.out.println("Incorrect Code! Try Again");
+        else user.userMenu();
     }
 
     static void signUp() {

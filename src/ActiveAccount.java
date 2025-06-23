@@ -16,8 +16,13 @@ public class ActiveAccount extends Account{
                              "\n3. Deposit\n4. Withdraw\nChoose a Number (0 for Exit): ");
             choice = InputUtil.next();
             switch (choice) {
-                case "1" -> System.out.println("\nYour Balance is " + getBalance() + "$");
-                case "2" -> moneyTransport();
+                case "1" -> {
+                    setBalance(getBalance()-0.1);
+                    System.out.printf("\nYour Balance is %.1f$\n" , getBalance());
+                }
+                case "2" -> {
+                    moneyTransport();
+                }
                 case "3" -> deposit();
                 case "4" -> withdraw();
                 case "0" -> {}

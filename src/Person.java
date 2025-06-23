@@ -110,4 +110,7 @@ public abstract class Person {
     public String getPhoneNumber() {
         return phoneNumber;
     }
+    public String getFullName() {
+        return getFirstName() + " " + getLastName();
+    }
 }

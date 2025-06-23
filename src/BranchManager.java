@@ -18,6 +18,7 @@ public class BranchManager extends Employee {
                     3. Receive Employee List
                     4. See Bank's Customer List
                     5. Close Account
+                    6. Remove Employee
                     Choose a Number (0 for Logout):""" + " "
                     );
             choice = InputUtil.next();
@@ -27,6 +28,7 @@ public class BranchManager extends Employee {
                 case "3" -> receiveEmployeeList();
                 case "4" -> seeCustomerList();
                 case "5" -> closeAccount();
+                case "6" -> removeEmployee();
                 case "0" -> {
                     System.out.println("You Are Logged Out...\n");
                     return;
@@ -35,12 +37,37 @@ public class BranchManager extends Employee {
             }
         }while (true);
     }
-    public void acceptRequests(){}
+    public void acceptRequests() {}
     public void receiveEmployeeList(){
         Menu.bankList.get(bankCode).branchList.get(branchCode).displayEmployeeList();
     }
     public void seeCustomerList() {
         Menu.bankList.get(bankCode).displayCustomerList();
     }
-    public void closeAccount(){}
+    public void closeAccount() {}
+    public void removeEmployee() {
+        receiveEmployeeList();
+        System.out.print("\nEnter an Employee Code to Remove: ");
+        int code;
+        try {
+            code = Integer.parseInt(InputUtil.next());
+            System.out.print("Are You Sure? (Y/N): ");
+            String accept = InputUtil.next();
+            if (accept.equalsIgnoreCase("Y")) {
+                code%=1000000;
+                int bankCode = (code/10000)-1;
+                code%=10000;
+                int branchCode = (code/100)-1;
+                int employeeUniCode = (code%100)-1;
+                String name = Menu.bankList.get(bankCode).branchList.get(branchCode).employeeList.get(employeeUniCode).getFullName();
+                System.out.println("\n" + name + " Removed From Employee List");
+                Menu.bankList.get(bankCode).branchList.get(branchCode).employeeList.remove(employeeUniCode);
+                Menu.bankList.get(bankCode).branchList.get(branchCode).employeeList.add(employeeUniCode,null);
+            } else {
+                System.out.println("\nEmployee NOT Removed...");
+            }
+        } catch (Exception _) {
+            System.out.println("\nInvalid Code");
+        }
+    }
 }

@@ -23,12 +23,16 @@ public class Branch{
         employeeList.add(employee);
     }
     public void displayEmployeeList(){
+        int numberOfEmployees = 0;
         System.out.println("\nBranch Assistant");
-        for (int i=1;i<employeeList.size();i++)
+        for (int i=1;i<employeeList.size();i++) {
+            if (employeeList.get(i)==null)
+                continue;
             employeeList.get(i).employeeInfo();
-        System.out.println("Number of Employees: " + (employeeList.size()-1));
+            numberOfEmployees++;
+        }
+        System.out.println("Number of Employees: " + numberOfEmployees);
     }
-    public void removeEmployee(){}
     public void searchEmployee(){}
 
     //**************************  (SETTERS)  ************************

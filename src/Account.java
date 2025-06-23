@@ -14,7 +14,7 @@ public abstract class Account {
         setBalance();
         setOwnerName(ownerName);
     }
-    public void moneyTransport(){
+    public void moneyTransport() {
         System.out.print("\nEnter Destination Account Number: ");
         String accountNumber = InputUtil.nextLine();
         int accountIndex = Menu.checkAccount(accountNumber);
@@ -41,15 +41,16 @@ public abstract class Account {
             if (accept.equalsIgnoreCase("Y")) {
                 setBalance(getBalance()-transferAmount);
                 distAccount.setBalance(distAccount.getBalance()+transferAmount);
-                System.out.println("\nMoney Successfully Transferred\nYour Remaining Balance is " + getBalance() + "$");
+                setBalance(getBalance()-0.1);
+                System.out.printf("\nMoney Successfully Transferred\nYour Remaining Balance is %.1f$\n" , getBalance());
             }
             else {
                 System.out.println("\nMoney Transfer Cancelled...");
             }
         }
     }
-    public void deposit(){}
-    public void withdraw(){}
+    public void deposit() {}
+    public void withdraw() {}
     public void displayAccountInfo() {
         System.out.println("Account Info:\n" +
                 bankName +
