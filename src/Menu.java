@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class Menu {
     public static ArrayList<Bank> bankList = new ArrayList<>();
     public static ArrayList<Customer> customers = new ArrayList<>();
+    public static int time = 0;
 
     public static void MainMenu() {
         String choice;
@@ -12,6 +13,7 @@ public class Menu {
                 1. Create Bank
                 2. Login/Sign Up
                 3. Bank Jobs
+                4. Advance Time
                 Choose a Number (0 for Exit):""" + " ";
 
         do {
@@ -21,6 +23,7 @@ public class Menu {
                 case "1" -> createBank();
                 case "2" -> login_signup();
                 case "3" -> bankJobs();
+                case "4" -> advanceTime();
                 case "0" -> System.out.println("Program Ended...");
                 default -> System.out.println("Invalid Choice!");
             }
@@ -153,6 +156,13 @@ public class Menu {
         }
     }
 
+    static void advanceTime() {
+        System.out.print("\nEnter Number of Months to Advance: ");
+        int advance = InputUtil.nextInt();
+        time+=advance;
+        System.out.println("\n" + advance + " Months After Now");
+    }
+
     public static void showAllBanks() {
         System.out.println("\n***** All Banks List *****");
         for (int i = 0; i < bankList.size(); i++) {
@@ -173,6 +183,7 @@ public class Menu {
         temp = (temp%10000)-1001;
         try {
             validAccount = customers.get((temp/100)-1).accountList.get(temp%100);
+            if (validAccount==null) return -1;
         } catch (Exception _) {
             return -1;
         }

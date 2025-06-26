@@ -12,12 +12,14 @@ public class Teller extends Employee{
                     
                     1. See Mail Box
                     2. Accept Requests
+                    3. Search Employee
                     Choose a Number (0 for Logout):""" + " "
             );
             choice = InputUtil.next();
             switch (choice){
                 case "1" -> mailBox();
                 case "2" -> acceptRequests();
+                case "3" -> searchEmployee();
                 case "0" -> {
                     System.out.println("You Are Logged Out...\n");
                     return;

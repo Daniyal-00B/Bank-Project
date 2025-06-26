@@ -21,6 +21,7 @@ public class Bank {
             System.out.println("["+ (i+1) + "] " + branchList.get(i).getBranchFullName());
     }
     public void displayCustomerList(){
+        if (customerList.isEmpty()) System.out.println("\nCustomer List is Empty");
         for (Integer i : customerList) {
             Menu.customers.get(i%100-1).customerInfo();
         }

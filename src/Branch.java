@@ -33,7 +33,6 @@ public class Branch{
         }
         System.out.println("Number of Employees: " + numberOfEmployees);
     }
-    public void searchEmployee(){}
 
     //**************************  (SETTERS)  ************************
     public void setBranchNumber(int branchCode) {
@@ -54,7 +53,7 @@ public class Branch{
     public int getBranchNumber() {
         return branchNumber;
     }
-    public BranchManager getbranchManager() {
+    public BranchManager getBranchManager() {
         return branchManager;
     }
     public AssistantManager getBranchAssistant() {

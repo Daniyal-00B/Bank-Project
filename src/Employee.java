@@ -1,13 +1,18 @@
+import java.util.Locale;
+
 public class Employee extends Person {
     private long employeeCode;
     private long salary;
     private String workplace;
+    int BankCode, BranchCode;
 
     public Employee(String workplace, int type, int bankCode, int branchCode, int employeeUniCode) {
         super(type);
         setEmployeeCode(type, bankCode, branchCode, employeeUniCode);
         setSalary();
         setWorkplace(workplace);
+        BankCode = bankCode;
+        BranchCode = branchCode;
     }
     public void userMenu(){};
     public void history() {}
@@ -16,6 +21,18 @@ public class Employee extends Person {
         System.out.println(getFirstName() + " " + getLastName() +
                 "\nAddress: " + getAddress() + "\nCode: " + getEmployeeCode() +
                 "\n-----------------------------------------------");
+    }
+    public void searchEmployee() {
+        System.out.print("\nEnter Employee's Name: ");
+        String search = InputUtil.nextLine().toLowerCase(Locale.ROOT);
+        for (Employee i : Menu.bankList.get(BankCode).branchList.get(BranchCode).employeeList) {
+            if (search.equalsIgnoreCase(i.getFullName().trim())) {
+                System.out.println();
+                i.employeeInfo();
+                return;
+            }
+        }
+        System.out.println("\nEmployee Not Found");
     }
 
 

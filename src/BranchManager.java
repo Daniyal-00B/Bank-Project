@@ -1,9 +1,7 @@
 public class BranchManager extends Employee {
-    private int bankCode, branchCode;
+
     public BranchManager(String workPlace, int bankCode, int branchCode, int employeeUniCode){
         super(workPlace,1, bankCode, branchCode, employeeUniCode);
-        this.bankCode = bankCode;
-        this.branchCode = branchCode;
     }
     @Override
     public void userMenu(){
@@ -18,7 +16,8 @@ public class BranchManager extends Employee {
                     3. Receive Employee List
                     4. See Bank's Customer List
                     5. Close Account
-                    6. Remove Employee
+                    6. Search Employee
+                    7. Remove Employee
                     Choose a Number (0 for Logout):""" + " "
                     );
             choice = InputUtil.next();
@@ -28,7 +27,8 @@ public class BranchManager extends Employee {
                 case "3" -> receiveEmployeeList();
                 case "4" -> seeCustomerList();
                 case "5" -> closeAccount();
-                case "6" -> removeEmployee();
+                case "6" -> searchEmployee();
+                case "7" -> removeEmployee();
                 case "0" -> {
                     System.out.println("You Are Logged Out...\n");
                     return;
@@ -39,12 +39,39 @@ public class BranchManager extends Employee {
     }
     public void acceptRequests() {}
     public void receiveEmployeeList(){
-        Menu.bankList.get(bankCode).branchList.get(branchCode).displayEmployeeList();
+        Menu.bankList.get(BankCode).branchList.get(BranchCode).displayEmployeeList();
     }
     public void seeCustomerList() {
-        Menu.bankList.get(bankCode).displayCustomerList();
+        Menu.bankList.get(BankCode).displayCustomerList();
     }
-    public void closeAccount() {}
+    public void closeAccount() {
+        System.out.print("\nEnter Account Number to Close: ");
+        String accountNumber = InputUtil.nextLine();
+        int accountIndex = Menu.checkAccount(accountNumber);
+        if (accountIndex==-1)
+            System.out.println("\nInvalid Number Try Again");
+        else {
+            Account account = Menu.customers.get((accountIndex/100)-1).accountList.get(accountIndex%100);
+            for (int i=0;  i<Menu.bankList.get(BankCode).branchList.get(BranchCode).accountList.size(); i++) {
+                if (Menu.bankList.get(BankCode).branchList.get(BranchCode).accountList.get(i).getNumber().equals(account.getNumber())) {
+                    System.out.println("\nAccount Owner: " + Menu.bankList.get(BankCode).branchList.get(BranchCode).accountList.get(i).getOwnerName());
+                    Menu.bankList.get(BankCode).branchList.get(BranchCode).accountList.get(i).displayAccountInfo();
+                    System.out.print("Close This Account? (Y/N): ");
+                    String accept = InputUtil.next();
+                    if (!(accept.equalsIgnoreCase("Y"))) {
+                        System.out.println("Account Does not Closed");
+                        return;
+                    }
+                    Menu.customers.get((accountIndex/100)-1).accountList.remove(accountIndex%100);
+                    Menu.customers.get((accountIndex/100)-1).accountList.add(accountIndex%100, null);
+                    Menu.bankList.get(BankCode).branchList.get(BranchCode).accountList.remove(i);
+                    System.out.println("\nAccount Closed...");
+                    return;
+                }
+            }
+            System.out.println("\nThe Account Does Not Exist in This Branch");
+        }
+    }
     public void removeEmployee() {
         receiveEmployeeList();
         System.out.print("\nEnter an Employee Code to Remove: ");
