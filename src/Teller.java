@@ -1,4 +1,5 @@
 public class Teller extends Employee{
+
     public Teller(String workPlace, int bankCode, int branchCode, int employeeUniCode){
         super(workPlace, 3, bankCode, branchCode, employeeUniCode);
     }
@@ -18,7 +19,7 @@ public class Teller extends Employee{
             choice = InputUtil.next();
             switch (choice){
                 case "1" -> mailBox();
-                case "2" -> acceptRequests();
+                case "2" -> requests();
                 case "3" -> searchEmployee();
                 case "0" -> {
                     System.out.println("You Are Logged Out...\n");
@@ -28,5 +29,11 @@ public class Teller extends Employee{
             }
         }while (true);
     }
-    public void acceptRequests(){}
+    public void requests() {
+        if (mails.isEmpty()) {
+            System.out.println("\nThere is No Request");
+        } else {
+            mails.getFirst();
+        }
+    }
 }

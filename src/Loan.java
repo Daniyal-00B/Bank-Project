@@ -1,4 +1,4 @@
-public class BaseLoan {
+public class Loan {
     private int amountOfLoan;
     private int paymentPeriod;
 

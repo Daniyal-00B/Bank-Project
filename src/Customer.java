@@ -24,11 +24,11 @@ public class Customer extends Person{
             System.out.print("""
                     1. See Mail Box
                     2. Create Account
-                    3. Close Account
-                    4. All My Accounts
+                    3. Close Account Request
+                    4. Loan Request
                     5. Status
-                    6. Search Account
-                    7. Get Loan
+                    6. All My Accounts
+                    7. Search Account
                     Choose a Number (0 for Logout):""" + " "
             );
             choice = InputUtil.next();
@@ -36,10 +36,10 @@ public class Customer extends Person{
                 case "1" -> mailBox();
                 case "2" -> createAccount();
                 case "3" -> closeAccount();
-                case "4" -> displayAccountList();
+                case "4" -> loan();
                 case "5" -> statusReport();
-                case "6" -> searchAccount();
-                case "7" -> loan();
+                case "6" -> displayAccountList();
+                case "7" -> searchAccount();
                 case "0" -> {
                     System.out.println("You Are Logged Out...\n");
                     return;
@@ -94,32 +94,26 @@ public class Customer extends Person{
         createAccount(selectedBank, selectedBranch);
     }
     public void closeAccount(){
-        displayAccountList();
-        System.out.print("\nWhich Account Do You Wanna Close (Choose in [] Number)? ");
-        String choice = InputUtil.next();
-        int selectedAccount;
-        try {
-            selectedAccount = Integer.parseInt(choice)-1;
-            if (accountList.get(selectedAccount)==null) System.out.println("\nInvalid Choice");
-        } catch (Exception _) {
-            System.out.println("\nInvalid Choice");
-            return;
-        }
-        if (accountList.get(selectedAccount).getBalance()!=0) {
-            System.out.print("\nYou Have " + accountList.get(selectedAccount).getBalance() + "$ in This Account" +
-                    " by Closing This Account Your Money Will be Gone!\n" +
-                    "Continue? (Y or N): ");
-            String yesOrNo = InputUtil.next();
-            yesOrNo = yesOrNo.toUpperCase();
-            if (yesOrNo.equals("Y")) {
-                System.out.println("Your Selected Account Closed...");
-            } else {
-                System.out.println("Account Does not Closed");
+        System.out.print("\nEnter Account Number: ");
+        String accountNumber = InputUtil.nextLine();
+        int accountIndex = Menu.checkAccount(accountNumber);
+        if (accountIndex==-1)
+            System.out.println("\nInvalid Number Try Again");
+        else {
+            Account account = Menu.customers.get((accountIndex / 100) - 1).accountList.get(accountIndex % 100);
+            if (!accountList.contains(account)) {
+                System.out.println("\nInvalid Number Try Again");
                 return;
             }
+            System.out.print("\nYou Have " + account.getBalance() + "$ in This Account Are You Sure(Y/N)? ");
+            String YorN = InputUtil.next();
+            if (!YorN.equalsIgnoreCase("Y")) return;
+            String massage = "Close Account Request From " + getFullName() + " With Code: " + accountIndex;
+            Employee teller = Menu.chooseTeller(account.bankCode, account.branchCode);
+            if (teller==null) return;
+            teller.addMail(massage);
+            System.out.println("Your Close Request Sent to Bank");
         }
-        accountList.remove(selectedAccount);
-        accountList.add(selectedAccount, null);
     }
     public void displayAccountList(){
         if (accountList.isEmpty()) {
@@ -162,7 +156,52 @@ public class Customer extends Person{
         System.out.println("\nNumber of Results: " + resultCount + "\n");
     }
     public void loan(){
-        mails.add("Your Loan Request Send to Bank");
+        System.out.print("\nPlease Check This Form\n---------------------------------------");
+        customerInfo();
+        System.out.print("Do You Confirm This Info (Y/N): ");
+        String YorN = InputUtil.next();
+        if (!YorN.equalsIgnoreCase("Y")) return;
+        System.out.print("1. Regular Loan\n2. Active Loan\nChoose Loan Type: ");
+        String loanType = InputUtil.next();
+        if (!(loanType.equals("1") || loanType.equals("2"))) {
+            System.out.println("\nInvalid Choice");
+            return;
+        }
+        int count=0;
+        for (Account i : accountList) {
+            if (i==null) continue;
+            if (loanType.equals("2"))
+                if (!i.getType().equals("Active Account")) {
+                    i.displayAccountInfo();
+                    count++;
+                }
+            else if (i.getType().equals("Active Account")) {
+                i.displayAccountInfo();
+                count++;
+                }
+        }
+        if (count==0) {
+            System.out.println("\nYou Have No Account For This Type");
+            return;
+        }
+        System.out.print("\nEnter Account Number: ");
+        String accountNumber = InputUtil.nextLine();
+        int accountIndex = Menu.checkAccount(accountNumber);
+        if (accountIndex==-1)
+            System.out.println("\nInvalid Number Try Again");
+        else {
+            Account account = Menu.customers.get((accountIndex / 100) - 1).accountList.get(accountIndex % 100);
+            if (!accountList.contains(account)) {
+                System.out.println("\nInvalid Number Try Again");
+                return;
+            }
+            String massage = "Loan Request From " + getFullName() + " With Code: " + accountIndex;
+            Employee teller = Menu.chooseTeller(account.bankCode, account.branchCode);
+            if (teller==null) return;
+            teller.addMail(massage);
+            System.out.println("Your Loan Request Sent to Bank");
+        }
+
     }
     public void customerInfo() {
         System.out.println("\n" + getFullName() + "\nAddress: " + getAddress()

@@ -32,6 +32,9 @@ public abstract class Person {
                                    "\n------------------------------------------------------------");
         }
     }
+    public void addMail(String massage) {
+        mails.add(massage);
+    }
 
     //**************************  (SETTERS)  ************************
     public void setFirstName() {

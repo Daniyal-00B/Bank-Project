@@ -1,6 +1,6 @@
 import java.util.Locale;
 
-public class Employee extends Person {
+abstract class Employee extends Person {
     private long employeeCode;
     private long salary;
     private String workplace;
@@ -14,6 +14,7 @@ public class Employee extends Person {
         BankCode = bankCode;
         BranchCode = branchCode;
     }
+    abstract void requests();
     public void userMenu(){};
     public void history() {}
     public void handlingRequests() {}

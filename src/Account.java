@@ -5,6 +5,7 @@ public abstract class Account {
     private String type;
     private String bankName;
     private String ownerName;
+    public int bankCode, branchCode;
 
     public Account(int bankCode, int branchCode, long accountUniCode, String type, String ownerName){
         setType(type);
@@ -13,6 +14,8 @@ public abstract class Account {
         setBankName(bankCode);
         setBalance();
         setOwnerName(ownerName);
+        this.bankCode = bankCode;
+        this.branchCode = branchCode;
     }
     public void moneyTransport() {
         System.out.print("\nEnter Destination Account Number: ");

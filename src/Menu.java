@@ -192,4 +192,21 @@ public class Menu {
         }
         return temp;
     }
+
+    public static Employee chooseTeller(int bankCode, int branchCode) {
+        Employee teller=null;
+        boolean isFirst=true;
+        for (int i=2; i<bankList.get(bankCode).branchList.get(branchCode).employeeList.size(); i++) {
+            if (bankList.get(bankCode).branchList.get(branchCode).employeeList.get(i)==null) continue;
+            if (isFirst) {
+                teller = bankList.get(bankCode).branchList.get(branchCode).employeeList.get(i);
+                isFirst = false;
+            }else {
+                if (teller.mails.size()>bankList.get(bankCode).branchList.get(branchCode).employeeList.get(i).mails.size())
+                    teller = bankList.get(bankCode).branchList.get(branchCode).employeeList.get(i);
+            }
+        }
+        return teller;
+
+    }
 }

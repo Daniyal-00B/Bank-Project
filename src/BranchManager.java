@@ -12,23 +12,21 @@ public class BranchManager extends Employee {
             System.out.print("""
                     
                     1. See Mail Box
-                    2. Accept Requests
-                    3. Receive Employee List
-                    4. See Bank's Customer List
-                    5. Close Account
-                    6. Search Employee
-                    7. Remove Employee
+                    2. Requests
+                    3. See Employee List
+                    4. See Customer List
+                    5. Search Employee
+                    6. Remove Employee
                     Choose a Number (0 for Logout):""" + " "
                     );
             choice = InputUtil.next();
             switch (choice){
                 case "1" -> mailBox();
-                case "2" -> acceptRequests();
+                case "2" -> requests();
                 case "3" -> receiveEmployeeList();
                 case "4" -> seeCustomerList();
-                case "5" -> closeAccount();
-                case "6" -> searchEmployee();
-                case "7" -> removeEmployee();
+                case "5" -> searchEmployee();
+                case "6" -> removeEmployee();
                 case "0" -> {
                     System.out.println("You Are Logged Out...\n");
                     return;
@@ -37,7 +35,13 @@ public class BranchManager extends Employee {
             }
         }while (true);
     }
-    public void acceptRequests() {}
+    public void requests() {
+        if (mails.isEmpty()) {
+            System.out.println("\nThere is No Request");
+        } else {
+            mails.getFirst();
+        }
+    }
     public void receiveEmployeeList(){
         Menu.bankList.get(BankCode).branchList.get(BranchCode).displayEmployeeList();
     }
