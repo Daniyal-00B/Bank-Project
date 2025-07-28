@@ -2,8 +2,9 @@ import java.util.ArrayList;
 
 public class Bank {
     private String bankName;
-    private int bankCode;
+    public int bankCode;
     public ArrayList<Branch> branchList = new ArrayList<>();
+    public ArrayList<Employee> employeesList = new ArrayList<>();
     public ArrayList<Integer> customerList = new ArrayList<>();
 
     public Bank(String bankName, int bankCode) {

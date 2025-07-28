@@ -109,7 +109,7 @@ public class Customer extends Person{
             String YorN = InputUtil.next();
             if (!YorN.equalsIgnoreCase("Y")) return;
             String massage = "Close Account Request From " + getFullName() + " With Code: " + accountIndex;
-            Employee teller = Menu.chooseTeller(account.bankCode, account.branchCode);
+            Employee teller = Menu.chooseTeller(account.bankCode);
             if (teller==null) return;
             teller.addMail(massage);
             System.out.println("Your Close Request Sent to Bank");
@@ -195,8 +195,10 @@ public class Customer extends Person{
                 System.out.println("\nInvalid Number Try Again");
                 return;
             }
-            String massage = "Loan Request From " + getFullName() + " With Code: " + accountIndex;
-            Employee teller = Menu.chooseTeller(account.bankCode, account.branchCode);
+            System.out.print("Please Enter Amount of Loan ($): ");
+            int amount = InputUtil.nextInt();
+            String massage = amount + "$ Loan Request From " + getFullName() + " With Code: " + accountIndex;
+            Employee teller = Menu.chooseTeller(account.bankCode);
             if (teller==null) return;
             teller.addMail(massage);
             System.out.println("Your Loan Request Sent to Bank");
@@ -205,7 +207,8 @@ public class Customer extends Person{
     }
     public void customerInfo() {
         System.out.println("\n" + getFullName() + "\nAddress: " + getAddress()
-                            + "\nID: " + getId() + "\n---------------------------------------");
+                            + "\nID: " + getId() + "\nBirthday: " + getBirthday() + "\nNational Code: " + getNationalCode()
+                            + "\n---------------------------------------");
     }
 
     public void setId(int unicode) {

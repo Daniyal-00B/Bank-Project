@@ -6,6 +6,7 @@ public abstract class Account {
     private String bankName;
     private String ownerName;
     public int bankCode, branchCode;
+    public Loan loan = null;
 
     public Account(int bankCode, int branchCode, long accountUniCode, String type, String ownerName){
         setType(type);
@@ -52,8 +53,38 @@ public abstract class Account {
             }
         }
     }
-    public void deposit() {}
-    public void withdraw() {}
+    public void deposit() {
+        double amount;
+        System.out.print("\nDeposit Amount ($): ");
+        try {
+            amount = InputUtil.nextDouble();
+        } catch (Exception _) {
+            System.out.println("\nOperation Successfully FAILED...");
+            InputUtil.next(); // Clear Buffer
+            return;
+        }
+        double balance = getBalance() + amount;
+        setBalance(balance);
+        System.out.println(amount + "$ Deposited in Your Account");
+    }
+    public void withdraw() {
+        double amount;
+        System.out.print("\nWithdraw Amount ($): ");
+        try {
+            amount = InputUtil.nextDouble();
+        }catch (Exception _) {
+            System.out.println("\nOperation Successfully FAILED...");
+            InputUtil.next(); // Clear Buffer
+            return;
+        }
+        if (amount >= getBalance()-5) {
+            System.out.println("\nOperation Failed\nMaximum Withdraw Amount Is " + (getBalance()-5) + "$");
+            return;
+        }
+        double balance = getBalance() - amount;
+        setBalance(balance);
+        System.out.println("\nOperation Successful");
+    }
     public void displayAccountInfo() {
         System.out.println("Account Info:\n" +
                 bankName +
@@ -61,7 +92,34 @@ public abstract class Account {
                 "\nBalance: " + getBalance() +
                 "$\nType: " + getType() + "\n-----------------------------");
     }
-    abstract void bankOperation();
+    public void bankOperation() {
+        String choice;
+        for (int i = 0; true ; i++){
+            System.out.print("Enter Your Password: ");
+            choice = InputUtil.next();
+            if (choice.equals(getPassword())) break;
+            System.out.println("Incorrect");
+            if (i==2) return;
+        }
+        do {
+            System.out.print("\n$$$$$$$$  " + getBankName() + "  $$$$$$$$\n1. Get Balance\n2. Money Transport" +
+                    "\n3. Deposit\n4. Withdraw\nChoose a Number (0 for Exit): ");
+            choice = InputUtil.next();
+            switch (choice) {
+                case "1" -> {
+                    setBalance(getBalance()-0.1);
+                    System.out.printf("\nYour Balance is %.1f$\n" , getBalance());
+                }
+                case "2" -> {
+                    moneyTransport();
+                }
+                case "3" -> deposit();
+                case "4" -> withdraw();
+                case "0" -> {}
+                default -> System.out.println("\nInvalid Choice");
+            }
+        } while (!(choice.equals("0")));
+    }
 
     //**************************  (SETTERS)  **************************
     public void setNumber(int bankCode, int branchCode, long accountUniCode) {
@@ -89,6 +147,9 @@ public abstract class Account {
     public void setOwnerName(String ownerName) {
         this.ownerName = ownerName;
     }
+    public void setLoan(Loan loan) {
+        this.loan = loan;
+    }
 
     //**************************  (GETTERS)  **************************
     public String getNumber() {
@@ -108,5 +169,8 @@ public abstract class Account {
     }
     public String getOwnerName() {
         return ownerName;
+    }
+    public void getLoanStatus() {
+        System.out.println("%%%%%%%%%%%%%%  Unfinished Loan  %%%%%%%%%%%%%");
     }
 }

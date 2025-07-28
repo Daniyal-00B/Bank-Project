@@ -18,6 +18,7 @@ public class Branch{
     }
     public void addTeller(String workPlace, int bankCode, int branchCode){
         employeeList.add(new Teller(workPlace, bankCode, branchCode, employeeList.size()));
+        Menu.bankList.get(bankCode).employeesList.add(employeeList.getLast());
     }
     public void addEmployee(Employee employee){
         employeeList.add(employee);

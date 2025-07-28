@@ -1,3 +1,4 @@
+import java.util.Locale;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -49,6 +50,7 @@ public class InputUtil {
     }
 
     public static double nextDouble() {
+        scanner.useLocale(Locale.US);
         switchToConsoleIfNeeded();
         try {
             double result = scanner.nextDouble();
@@ -59,7 +61,7 @@ public class InputUtil {
                 switchToConsoleIfNeeded();
                 return scanner.nextDouble(); // Retry once after switching
             }
-            throw new RuntimeException("Failed to read integer input", e);
+            throw new RuntimeException("Failed to read Double input", e);
         }
     }
 

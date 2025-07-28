@@ -12,7 +12,7 @@ public class Menu {
                 ***********(<<  BANK PROJECT  >>)***********
                 1. Create Bank
                 2. Login/Sign Up
-                3. Bank Jobs
+                3. ATM
                 4. Advance Time
                 Choose a Number (0 for Exit):""" + " ";
 
@@ -22,8 +22,12 @@ public class Menu {
             switch (choice) {
                 case "1" -> createBank();
                 case "2" -> login_signup();
-                case "3" -> bankJobs();
+                case "3" -> ATM();
                 case "4" -> advanceTime();
+                case "GUI" -> {
+                    BankGUI.RUN();
+                    return;
+                }
                 case "0" -> System.out.println("Program Ended...");
                 default -> System.out.println("Invalid Choice!");
             }
@@ -144,7 +148,7 @@ public class Menu {
         }
     }
 
-    static void bankJobs() {
+    static void ATM() {
         System.out.print("\nEnter Your Account Number: ");
         String accountNumber = InputUtil.nextLine();
         int accountIndex = checkAccount(accountNumber);
@@ -159,6 +163,17 @@ public class Menu {
     static void advanceTime() {
         System.out.print("\nEnter Number of Months to Advance: ");
         int advance = InputUtil.nextInt();
+        if (advance < 1) {
+            System.out.println("\nInvalid Value");
+            return;
+        }
+        for (Customer customer : customers) {
+            for (int i=0;  i<customer.accountList.size(); i++) {
+                if (customer.accountList.get(i)==null) continue;
+                if (customer.accountList.get(i) instanceof ShortTermAccount)
+                    ((ShortTermAccount)customer.accountList.get(i)).setProfit(time, advance);
+            }
+        }
         time+=advance;
         System.out.println("\n" + advance + " Months After Now");
     }
@@ -193,20 +208,25 @@ public class Menu {
         return temp;
     }
 
-    public static Employee chooseTeller(int bankCode, int branchCode) {
+    public static Employee chooseTeller(int bankCode) {
         Employee teller=null;
         boolean isFirst=true;
-        for (int i=2; i<bankList.get(bankCode).branchList.get(branchCode).employeeList.size(); i++) {
-            if (bankList.get(bankCode).branchList.get(branchCode).employeeList.get(i)==null) continue;
+        for (int i=2; i<bankList.get(bankCode).employeesList.size(); i++) {
+            if (bankList.get(bankCode).employeesList.get(i)==null) continue;
             if (isFirst) {
-                teller = bankList.get(bankCode).branchList.get(branchCode).employeeList.get(i);
+                teller = bankList.get(bankCode).employeesList.get(i);
                 isFirst = false;
             }else {
-                if (teller.mails.size()>bankList.get(bankCode).branchList.get(branchCode).employeeList.get(i).mails.size())
-                    teller = bankList.get(bankCode).branchList.get(branchCode).employeeList.get(i);
+                if (teller.mails.size()>bankList.get(bankCode).employeesList.get(i).mails.size())
+                    teller = bankList.get(bankCode).employeesList.get(i);
             }
         }
         return teller;
-
     }
+
+
+    // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+    // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+
 }

@@ -1,20 +1,26 @@
 public class Loan {
-    private int amountOfLoan;
+    private int amount;
     private int paymentPeriod;
+    private Customer loanOwner;
 
-    public int getAmountOfLoan() {
-        return amountOfLoan;
+
+    public void setPaymentPeriod(int paymentPeriod) {
+        this.paymentPeriod = paymentPeriod;
     }
-
-    public void setAmountOfLoan(int amountOfLoan) {
-        this.amountOfLoan = amountOfLoan;
+    public void setAmount(int amountOfLoan) {
+        this.amount = amountOfLoan;
+    }
+    public void setLoanOwner (Customer loanOwner) {
+        this.loanOwner = loanOwner;
     }
 
     public int getPaymentPeriod() {
         return paymentPeriod;
     }
-
-    public void setPaymentPeriod(int paymentPeriod) {
-        this.paymentPeriod = paymentPeriod;
+    public int getAmount() {
+        return amount;
+    }
+    public Customer getLoanOwner() {
+        return loanOwner;
     }
 }

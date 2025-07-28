@@ -17,10 +17,10 @@ abstract class Employee extends Person {
     abstract void requests();
     public void userMenu(){};
     public void history() {}
-    public void handlingRequests() {}
     public void employeeInfo() {
-        System.out.println(getFirstName() + " " + getLastName() +
-                "\nAddress: " + getAddress() + "\nCode: " + getEmployeeCode() +
+        System.out.println(getFullName() +
+                "\nAddress: " + getAddress() + "\nEmployee Code: " + getEmployeeCode() +
+                "\nBirthday: " + getBirthday() + "\nNational Code: " + getNationalCode() +
                 "\n-----------------------------------------------");
     }
     public void searchEmployee() {

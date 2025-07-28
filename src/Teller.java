@@ -34,6 +34,45 @@ public class Teller extends Employee{
             System.out.println("\nThere is No Request");
         } else {
             mails.getFirst();
+            System.out.print("\nProcess This Request (Y/N)? ");
+            String accept = InputUtil.next();
+            if (!(accept.equalsIgnoreCase("Y"))) return;
+            int sStart = mails.getFirst().indexOf(":")+2;
+            int accountIndex = Integer.parseInt(mails.getFirst().substring(sStart));
+            Account account = Menu.customers.get((accountIndex / 100) - 1).accountList.get(accountIndex % 100);
+            char requestType = mails.getFirst().charAt(0);
+            if (requestType=='C') {
+                if (account.loan!=null) {
+                    account.getLoanStatus();
+                    String massage = "This Account Has Loan, So Can NOT be Close!";
+                    System.out.print("\n" + massage + "\nWould You Like to Add Some Explanation About This?\nMassage: ");
+                    massage += "\n" + InputUtil.next();
+                    Menu.customers.get((accountIndex / 100) - 1).addMail(massage);
+                    mails.removeFirst();
+                    return;
+                }
+                account.displayAccountInfo();
+                System.out.print("\nThis Account Can Be Close\nAccept This Request (Y/N)? ");
+                do {
+                    accept = InputUtil.next();
+                } while (!(accept.equalsIgnoreCase("N") || accept.equalsIgnoreCase("Y")));
+                if (accept.equalsIgnoreCase("N")) {
+                    String massage = "Your Account Cancellation Request for Account\n" +
+                                     account.getNumber() + " Has Been Rejected";
+                    Menu.customers.get((accountIndex / 100) - 1).addMail(massage);
+                }
+                else {
+                    String massage = "Your Account " + account.getNumber() + " Has Benn Closed";
+                    Menu.bankList.get(BankCode).branchList.get(BranchCode).getBranchManager().closeAccount(accountIndex);
+                    Menu.customers.get((accountIndex / 100) - 1).addMail(massage);
+                }
+            }
+            else {
+                System.out.println("\nLoan Request From\n" + account.getOwnerName() + "\nFor Account " + account.getNumber());
+                System.out.println("Customer Full Info:");
+                Menu.customers.get((accountIndex / 100) - 1).customerInfo();
+
+            }
         }
     }
 }
