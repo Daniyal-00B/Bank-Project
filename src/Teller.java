@@ -45,9 +45,10 @@ public class Teller extends Employee{
                 if (account.loan!=null) {
                     account.getLoanStatus();
                     String massage = "This Account Has Loan, So Can NOT be Close!";
+                    account.availability=true;
                     System.out.print("\n" + massage + "\nWould You Like to Add Some Explanation About This?\nMassage: ");
                     massage += "\n" + InputUtil.next();
-                    Menu.customers.get((accountIndex / 100) - 1).addMail(massage);
+                    Menu.customers.get((accountIndex / 100) - 1).addMail(massage, accountIndex);
                     mails.removeFirst();
                     return;
                 }
@@ -59,19 +60,35 @@ public class Teller extends Employee{
                 if (accept.equalsIgnoreCase("N")) {
                     String massage = "Your Account Cancellation Request for Account\n" +
                                      account.getNumber() + " Has Been Rejected";
-                    Menu.customers.get((accountIndex / 100) - 1).addMail(massage);
+                    Menu.customers.get((accountIndex / 100) - 1).addMail(massage, accountIndex);
+                    mails.removeFirst();
                 }
                 else {
                     String massage = "Your Account " + account.getNumber() + " Has Benn Closed";
                     Menu.bankList.get(BankCode).branchList.get(BranchCode).getBranchManager().closeAccount(accountIndex);
-                    Menu.customers.get((accountIndex / 100) - 1).addMail(massage);
+                    Menu.customers.get((accountIndex / 100) - 1).addMail(massage, accountIndex);
+                    mails.removeFirst();
                 }
             }
             else {
                 System.out.println("\nLoan Request From\n" + account.getOwnerName() + "\nFor Account " + account.getNumber());
-                System.out.println("Customer Full Info:");
+                System.out.println("Client Full Info:");
                 Menu.customers.get((accountIndex / 100) - 1).customerInfo();
-
+                System.out.print("\nAccept (Y/N)? ");
+                do {
+                    accept = InputUtil.next();
+                } while (!(accept.equalsIgnoreCase("N") || accept.equalsIgnoreCase("Y")));
+                if (accept.equalsIgnoreCase("Y")) {
+                    Menu.bankList.get(BankCode).branchList.get(BranchCode).getBranchAssistant().addMail(mails.getFirst());
+                    String massage = "Your Loan Request With Code " + accountIndex + " is Processing by Manager Assistant";
+                    Menu.customers.get((accountIndex / 100) - 1).addMail(massage, accountIndex);
+                    mails.removeFirst();
+                }
+                else {
+                    String massage = "Your Loan Request Rejected by Bank";
+                    Menu.customers.get((accountIndex / 100) - 1).addMail(massage, accountIndex);
+                    mails.removeFirst();
+                }
             }
         }
     }

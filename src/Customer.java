@@ -112,7 +112,10 @@ public class Customer extends Person{
             Employee teller = Menu.chooseTeller(account.bankCode);
             if (teller==null) return;
             teller.addMail(massage);
-            System.out.println("Your Close Request Sent to Bank");
+            massage = "Your Close Request With Code " + accountIndex + " Sent to Bank";
+            System.out.println(massage);
+            addMail(massage);
+            account.availability=false;
         }
     }
     public void displayAccountList(){
@@ -181,7 +184,7 @@ public class Customer extends Person{
                 }
         }
         if (count==0) {
-            System.out.println("\nYou Have No Account For This Type");
+            System.out.println("\nYou Have No Account For This Type, Please Create an Account First");
             return;
         }
         System.out.print("\nEnter Account Number: ");
@@ -197,18 +200,33 @@ public class Customer extends Person{
             }
             System.out.print("Please Enter Amount of Loan ($): ");
             int amount = InputUtil.nextInt();
-            String massage = amount + "$ Loan Request From " + getFullName() + " With Code: " + accountIndex;
+            String returnPeriod;
+            do {
+                System.out.print("Return Time (12, 24 or 36 months): ");
+                returnPeriod = InputUtil.next();
+            }while (!(returnPeriod.equals("12") || returnPeriod.equals("24") || returnPeriod.equals("36")));
+            String massage = amount + "$ " + returnPeriod + " Months Loan Request From " + getFullName() + " With Code: " + accountIndex;
             Employee teller = Menu.chooseTeller(account.bankCode);
             if (teller==null) return;
             teller.addMail(massage);
-            System.out.println("Your Loan Request Sent to Bank");
+            massage = "Your Loan Request With Code " + accountIndex + " Sent to Bank";
+            System.out.println(massage);
+            addMail(massage);
         }
-
     }
     public void customerInfo() {
         System.out.println("\n" + getFullName() + "\nAddress: " + getAddress()
                             + "\nID: " + getId() + "\nBirthday: " + getBirthday() + "\nNational Code: " + getNationalCode()
                             + "\n---------------------------------------");
+    }
+    public void addMail(String massage, int accountIndex) {
+        String code = accountIndex + "";
+        for (int i=0; i<mails.size(); i++) {
+            if (mails.get(i).contains(code)) {
+                mails.add(i, massage);
+                return;
+            }
+        }
     }
 
     public void setId(int unicode) {

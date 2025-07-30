@@ -46,36 +46,39 @@ public abstract class Person {
         lastName = InputUtil.nextLine();
     }
     public void setBirthday() {
-        System.out.print("Birthday: ");
-        if (InputUtil.hasNext()) {
-            birthday = InputUtil.next();
+        System.out.println("Birthday");
+        int year=0;
+        int month=0;
+        int day=0;
+
+        System.out.print("  Year: ");
+        year = InputUtil.nextInt();
+        System.out.print("  Month: ");
+        month = InputUtil.nextInt();
+        System.out.print("  Day: ");
+        day = InputUtil.nextInt();
+
+        if (year>1385 || year<1300 || month>12 || day>31) {
+            System.out.println("Invalid Birthday");
+            setBirthday();
         } else {
-            birthday = "";
+            birthday = year + "/" + month + "/" + day;
         }
     }
     public void setNationalCode() {
         System.out.print("National Code: ");
-        if (InputUtil.hasNext()) {
-            nationalCode = InputUtil.next();
-        } else {
-            nationalCode = "";
+        nationalCode = InputUtil.next();
+        if (!(nationalCode.length()==10)) {
+            System.out.println("Invalid National Code");
+            setNationalCode();
         }
     }
     public void setAddress() {
         System.out.print("Address: ");
-        if (InputUtil.hasNext()) {
-            address = InputUtil.nextLine();
-        } else {
-            address = "";
-        }
+        address = InputUtil.nextLine();
     }
     public void setPhoneNumber() {
         System.out.print("Phone Number: ");
-        if (!InputUtil.hasNext()) {
-            phoneNumber = "";
-            return;
-        }
-
         String temp = InputUtil.next();
 
         try {

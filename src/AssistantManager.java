@@ -32,7 +32,7 @@ public class AssistantManager extends Employee{
         if (mails.isEmpty()) {
             System.out.println("\nThere is No Request");
         } else {
-            mails.getFirst();
+            mails.getFirst();//##################################################################
         }
     }
 }

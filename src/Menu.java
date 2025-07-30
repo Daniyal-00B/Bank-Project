@@ -25,7 +25,7 @@ public class Menu {
                 case "3" -> ATM();
                 case "4" -> advanceTime();
                 case "GUI" -> {
-                    BankGUI.RUN();
+                    GUI.RUN();
                     return;
                 }
                 case "0" -> System.out.println("Program Ended...");
@@ -77,12 +77,7 @@ public class Menu {
             System.out.println("Please Create a Bank First");
             return;
         }
-        System.out.print("Please Enter Your Code or Press + for Sign Up (0 for Exit): \n");
-        //############################################ TEST #####################################################
-        for (Employee employee : bankList.get(1).branchList.getFirst().employeeList) {
-            System.out.println(employee.getEmployeeCode());
-        }
-        //############################################ TEST #####################################################
+        System.out.print("Please Enter Your Code or Press + for Sign Up (0 for Exit): ");
         String choice = InputUtil.next();
         switch (choice) {
             case "+" -> signUp();
@@ -223,10 +218,5 @@ public class Menu {
         }
         return teller;
     }
-
-
-    // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-    // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-
 
 }

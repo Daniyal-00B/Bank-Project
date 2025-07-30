@@ -6,6 +6,7 @@ public abstract class Account {
     private String bankName;
     private String ownerName;
     public int bankCode, branchCode;
+    public boolean availability = true;
     public Loan loan = null;
 
     public Account(int bankCode, int branchCode, long accountUniCode, String type, String ownerName){

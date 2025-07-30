@@ -2,12 +2,12 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class BankGUI {
+public class GUI {
 
     private JLabel outputLabel;
 
     public static void RUN() {
-        SwingUtilities.invokeLater(() -> new BankGUI().createAndShowGUI());
+        SwingUtilities.invokeLater(() -> new GUI().createAndShowGUI());
     }
 
     public void createAndShowGUI() {

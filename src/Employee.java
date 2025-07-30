@@ -21,6 +21,7 @@ abstract class Employee extends Person {
         System.out.println(getFullName() +
                 "\nAddress: " + getAddress() + "\nEmployee Code: " + getEmployeeCode() +
                 "\nBirthday: " + getBirthday() + "\nNational Code: " + getNationalCode() +
+                "\nPhone Number: " + getPhoneNumber() + "\nSalary: " + getSalary() + "$" +
                 "\n-----------------------------------------------");
     }
     public void searchEmployee() {
@@ -42,7 +43,7 @@ abstract class Employee extends Person {
         this.workplace = workplace;
     }
     public void setSalary() {
-        System.out.print("Salary: ");
+        System.out.print("Salary ($): ");
         salary = InputUtil.nextInt();
     }
     public void setEmployeeCode(int type, int bankCode, int branchCode, int employeeUniCode) {
