@@ -47,7 +47,7 @@ public class AssistantManager extends Employee{
                 }
             }
             if (!isLoanAvailable) {
-                System.out.println();
+                System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
             }
         }
     }
