@@ -1,0 +1,17 @@
+login codes
+
+bank1, branch1
+Branch Manager 1010101
+Assistant      2010102
+Teller1        3010103
+
+bank2, branch2
+Branch Manager 1020201
+Assistant      2020202
+Teller2        3020203
+
+
+Customers      4000001 - 4000001+n
+
+
+All Accounts Password is 8888
