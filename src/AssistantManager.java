@@ -32,7 +32,23 @@ public class AssistantManager extends Employee{
         if (mails.isEmpty()) {
             System.out.println("\nThere is No Request");
         } else {
-            mails.getFirst();//##################################################################
+            mails.getFirst();
+            System.out.print("\nProcess This Request (Y/N)? ");
+            String accept = InputUtil.next();
+            if (!(accept.equalsIgnoreCase("Y"))) return;
+            int sStart = mails.getFirst().indexOf(":")+2;
+            int accountIndex = Integer.parseInt(mails.getFirst().substring(sStart));
+            Customer customer = Menu.customers.get((accountIndex / 100) - 1);
+            boolean isLoanAvailable = true;
+            for (Account i : customer.accountList) {
+                if (i!=null) {
+                    isLoanAvailable = false;
+                    return;
+                }
+            }
+            if (!isLoanAvailable) {
+                System.out.println();
+            }
         }
     }
 }
