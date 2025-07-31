@@ -1,153 +1,222 @@
-import Bank.Bank;
-import Person.Employee;
-
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Menu {
-    static ArrayList<Bank> bankList = new ArrayList<>();
-    static int bankCounter = 0;
-    static Scanner scanner = new Scanner(System.in);
-    public static void MainMenu(){
+    public static ArrayList<Bank> bankList = new ArrayList<>();
+    public static ArrayList<Customer> customers = new ArrayList<>();
+    public static int time = 0;
 
-        int choice;
+    public static void MainMenu() {
+        String choice;
         String Menu = """
                 
                 ***********(<<  BANK PROJECT  >>)***********
                 1. Create Bank
                 2. Login/Sign Up
-                Choose a Number:""" + " ";
+                3. ATM
+                4. Advance Time
+                Choose a Number (0 for Exit):""" + " ";
 
         do {
             System.out.print(Menu);
-            choice = scanner.nextInt();
-            switch (choice){
-                case 1 -> createBank();
-                case 2 -> login_signup();
-                case 0 -> System.out.println("Program Ended...");
+            choice = InputUtil.next();
+            switch (choice) {
+                case "1" -> createBank();
+                case "2" -> login_signup();
+                case "3" -> ATM();
+                case "4" -> advanceTime();
+                case "GUI" -> {
+                    GUI.RUN();
+                    return;
+                }
+                case "0" -> System.out.println("Program Ended...");
                 default -> System.out.println("Invalid Choice!");
             }
-        }while (choice != 0);
-        scanner.close();
+        } while (!(choice.equals("0")));
+        InputUtil.closeScanner();
     }
 
-    static void createBank(){
+    static void createBank() {
         String choice = "+";
-        if (!bankList.isEmpty()){
+        if (!bankList.isEmpty()) {
             showAllBanks();
-            System.out.print("Select a Bank for  Create a Branch or Enter (+) Symbol for Add (0 for Exit): ");
-            choice = scanner.next();
+            System.out.print("Select a Bank for Create a Branch or Enter (+) Symbol for Add (0 for Exit): ");
+            choice = InputUtil.next();
         }
-        switch (choice){
+        switch (choice) {
             case "+" -> {
                 System.out.print("Enter the Bank Name: ");
-                scanner.nextLine();
                 String bankName;
                 do {
-                    bankName = scanner.nextLine();
+                    bankName = InputUtil.nextLine();
                     if (bankName.isEmpty()) System.out.print("Bank Name Can Not Be Empty!\nEnter the Bank Name: ");
-                }while (bankName.isEmpty());
+                } while (bankName.isEmpty());
+                int bankUniCode = bankList.size();
+                bankList.add(new Bank(bankName, bankUniCode));
                 System.out.println("\nCreating The First Branch for Bank");
-                bankList.add(new Bank(bankName, bankCounter));
-                bankCounter++;
-                System.out.println("Bank Created!🎉\n");
+                bankList.get(bankUniCode).createBranch();
             }
             case "0" -> {}
             default -> {
-                int selectedBank=0;
+                int selectedBank = 0;
                 try {
                     selectedBank = Integer.parseInt(choice);
+                } catch (Exception _) {
+                    System.out.println("Invalid Choice!");
                 }
-                catch (Exception _){
-                    System.out.println("Invalid Choice!🤬");
-                }
-                selectedBank-=1;
-                if (selectedBank < 0 || selectedBank > bankList.size())
-                    System.out.println("Your Selected Bank Dose Not Exist");
+                selectedBank -= 1;
+                if (selectedBank < 0 || selectedBank >= bankList.size())
+                    System.out.println("Your Selected Bank Does Not Exist");
                 else
                     bankList.get(selectedBank).createBranch();
             }
         }
     }
 
-    static void showAllBanks(){
+    static void login_signup() {
+        if (bankList.isEmpty()) {
+            System.out.println("Please Create a Bank First");
+            return;
+        }
+        System.out.print("Please Enter Your Code or Press + for Sign Up (0 for Exit): ");
+        String choice = InputUtil.next();
+        switch (choice) {
+            case "+" -> signUp();
+            case "0" -> {}
+            default -> login(choice);
+        }
+    }
+
+    static void login(String input) {
+        int code;
+        try {
+            code = Integer.parseInt(input);
+        } catch (Exception _) {
+            System.out.println("Code Must Be Number!");
+            return;
+        }
+        Person user;
+        int type = code/1000000;
+        try {
+            if (type == 4){
+                user = customers.get(code%100-1);
+            }
+            else {
+                code%=1000000;
+                int bankCode = (code/10000)-1;
+                code%=10000;
+                int branchCode = (code/100)-1;
+                int employeeUniCode = (code%100)-1;
+                user = bankList.get(bankCode).branchList.get(branchCode).employeeList.get(employeeUniCode);
+            }
+        } catch (Exception _) {
+            System.out.println("Incorrect Code! Try Again");
+            return;
+        }
+        if (user==null) System.out.println("Incorrect Code! Try Again");
+        else user.userMenu();
+    }
+
+    static void signUp() {
+        showAllBanks();
+        System.out.print("Select a Bank: ");
+        int selectedBank = InputUtil.nextInt() -1;
+        if (selectedBank < 0 || selectedBank >= bankList.size()) {
+            System.out.println("Invalid Choice! Try Again");
+        }
+        bankList.get(selectedBank).displayBranchList();
+        System.out.print("Please Select a Branch: ");
+        int selectedBranch = InputUtil.nextInt() -1;
+        if (selectedBranch < 0 || selectedBranch >= bankList.get(selectedBank).branchList.size()) {
+            System.out.println("Invalid Choice! Try Again");
+        }
+        System.out.print("\n[1] Employee\n[2] Customer\nPlease Select Your Role: ");
+        int type;
+        do {
+            type = InputUtil.nextInt();
+        } while (type != 1 && type != 2);
+        if (type == 1) {
+            String workPlace = bankList.get(selectedBank).getBankName();
+            bankList.get(selectedBank).branchList.get(selectedBranch).addTeller(workPlace, selectedBank, selectedBranch);
+        } else {
+            int uniCode = customers.size();
+            customers.add(new Customer(selectedBank, selectedBranch, uniCode));
+        }
+    }
+
+    static void ATM() {
+        System.out.print("\nEnter Your Account Number: ");
+        String accountNumber = InputUtil.nextLine();
+        int accountIndex = checkAccount(accountNumber);
+        if (accountIndex==-1)
+            System.out.println("\nInvalid Number Try Again");
+        else {
+            Account account = customers.get((accountIndex/100)-1).accountList.get(accountIndex%100);
+            account.bankOperation();
+        }
+    }
+
+    static void advanceTime() {
+        System.out.print("\nEnter Number of Months to Advance: ");
+        int advance = InputUtil.nextInt();
+        if (advance < 1) {
+            System.out.println("\nInvalid Value");
+            return;
+        }
+        for (Customer customer : customers) {
+            for (int i=0;  i<customer.accountList.size(); i++) {
+                if (customer.accountList.get(i)==null) continue;
+                if (customer.accountList.get(i) instanceof ShortTermAccount)
+                    ((ShortTermAccount)customer.accountList.get(i)).setProfit(time, advance);
+            }
+        }
+        time+=advance;
+        System.out.println("\n" + advance + " Months After Now");
+    }
+
+    public static void showAllBanks() {
         System.out.println("\n***** All Banks List *****");
         for (int i = 0; i < bankList.size(); i++) {
             System.out.println("[" + (i + 1) + "] " + bankList.get(i).getBankName());
         }
     }
 
-    static void login_signup(){
-        if (bankList.isEmpty()){
-            System.out.println("Please Create a Bank First");
-            return;
+    public static int checkAccount(String account) {
+        int temp;
+        Account validAccount;
+        String checkPart;
+        try {
+            checkPart = account.substring(account.length()-8);
+            temp = Integer.parseInt(checkPart.replace(" ", ""));
+        } catch (Exception _) {
+            return -1;
         }
-        System.out.print("Please Enter Your Code or Press + for Sign Up (0 for Exit): \n");
-        for (Employee employee : bankList.getFirst().branchList.getFirst().employeeList){
-        System.out.println(employee.getEmployeeCode());
+        temp = (temp%10000)-1001;
+        try {
+            validAccount = customers.get((temp/100)-1).accountList.get(temp%100);
+            if (validAccount==null) return -1;
+        } catch (Exception _) {
+            return -1;
         }
-        String choice = scanner.next();
-        switch (choice){
-            case "+" -> signUp();
-            case "0" ->{}
-            default -> {
-                login(choice);}
-//                System.out.println("Login %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-
+        if (Long.parseLong(account.replace(" ", ""))!=Long.parseLong(validAccount.getNumber().replace(" ", ""))) {
+            return -1;
         }
-        //bankList.get(11).branchList.get(22).getbranchManager().deleteEmployee(bankList.get(11));
-    }
-    static void signUp(){
-        showAllBanks();
-        System.out.print("Select a Bank: ");
-        int selectedBank = scanner.nextInt()-1;
-        if (selectedBank < 0 || selectedBank > bankList.size()){
-            System.out.println("invalid Choice! Try Again");
-            signUp();
-        }
-        bankList.get(selectedBank).displayBranchList();
-        System.out.print("Please Select a Branch: ");
-        int selectedBranch = scanner.nextInt()-1;
-        if (selectedBranch < 0 || selectedBranch > bankList.get(selectedBank).branchList.size())
-        {
-            System.out.println("invalid Choice! Try Again");
-            signUp();
-        }
-        System.out.print("\n[1] Employee\n[2] Customer\nPlease Select Your Role: ");
-        int type;
-        do {
-            type = scanner.nextInt();
-        }while (type!=1 && type!=2);
-        if (type == 1){
-            String workPlace = bankList.get(selectedBank).getBankName();
-            bankList.get(selectedBank).branchList.get(selectedBranch).addTeller(workPlace,3, selectedBank, selectedBranch);
-            bankList.get(selectedBank).branchList.get(selectedBranch).addEmployee(bankList.get(selectedBank).branchList.get(selectedBranch).getLastTeller());
-        }
-        else {
-            System.out.println("customer sign up %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-        }
+        return temp;
     }
 
-    static void login(String employeeCode) {
-        String[] part = employeeCode.split("\\.");
-        int employeeType = Integer.parseInt(part[0]);
-        int employeeBank = Integer.parseInt(part[1])-1;
-        int employeeBranch = Integer.parseInt(part[2])-1;
-        int employeeCount = Integer.parseInt(part[3])-1;
-        if (part.length == 4 &&
-                employeeType<3 && employeeType>0 &&
-                employeeBank<bankList.size() && employeeBank>=0 &&
-                employeeBranch<bankList.get(employeeBank).branchList.size() && employeeBranch>=0 &&
-                employeeCount<bankList.get(employeeBank).branchList.get(employeeBranch).employeeList.size() && employeeCount>=0
-        ) {
-            Employee employee = bankList.get(employeeBank).branchList.get(employeeBranch).employeeList.get(employeeCount);
-            if(employee.getEmployeeCode().equals(employeeCode)){
-                System.out.println("Hi " + employee.fullName);
-                employee.userMenu();
+    public static Employee chooseTeller(int bankCode) {
+        Employee teller=null;
+        boolean isFirst=true;
+        for (int i=2; i<bankList.get(bankCode).employeesList.size(); i++) {
+            if (bankList.get(bankCode).employeesList.get(i)==null) continue;
+            if (isFirst) {
+                teller = bankList.get(bankCode).employeesList.get(i);
+                isFirst = false;
+            }else {
+                if (teller.mails.size()>bankList.get(bankCode).employeesList.get(i).mails.size())
+                    teller = bankList.get(bankCode).employeesList.get(i);
             }
-            else {
-                System.out.println("invalid");
-            }
-        }else System.out.println("invalid EmployeeCode");
+        }
+        return teller;
     }
+
 }
