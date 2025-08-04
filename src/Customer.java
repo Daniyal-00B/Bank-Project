@@ -4,6 +4,7 @@ import java.util.Locale;
 public class Customer extends Person{
     private int id;
     ArrayList<Account> accountList = new ArrayList<>();
+    public boolean haveLoan = false;
 
 
     public Customer(int bankCode, int branchCode, int uniCode){
@@ -36,7 +37,7 @@ public class Customer extends Person{
                 case "1" -> mailBox();
                 case "2" -> createAccount();
                 case "3" -> closeAccount();
-                case "4" -> loan();
+                case "4" -> loanRequest();
                 case "5" -> statusReport();
                 case "6" -> displayAccountList();
                 case "7" -> searchAccount();
@@ -112,7 +113,7 @@ public class Customer extends Person{
             Employee teller = Menu.chooseTeller(account.bankCode);
             if (teller==null) return;
             teller.addMail(massage);
-            massage = "Your Close Request With Code " + accountIndex + " Sent to Bank";
+            massage = "Your Close Account Request With Code " + accountIndex + " Sent to Bank";
             System.out.println(massage);
             addMail(massage);
             account.availability=false;
@@ -158,7 +159,7 @@ public class Customer extends Person{
         if (resultCount==0) System.out.print("\nYou have No Account in This Type");
         System.out.println("\nNumber of Results: " + resultCount + "\n");
     }
-    public void loan(){
+    public void loanRequest(){
         System.out.print("\nPlease Check This Form\n---------------------------------------");
         customerInfo();
         System.out.print("Do You Confirm This Info (Y/N): ");
@@ -220,15 +221,17 @@ public class Customer extends Person{
                             + "\n---------------------------------------");
     }
     public void addMail(String massage, int accountIndex) {
-        String code = accountIndex + "";
+        String code = "Code " + accountIndex;
         for (int i=0; i<mails.size(); i++) {
             if (mails.get(i).contains(code)) {
-                mails.add(i, massage);
+                mails.remove(i);
+                mails.add(massage);
                 return;
             }
         }
     }
 
+    public void setLoan(int amount, int period, int type) {}
     public void setId(int unicode) {
         id = 4000000 + unicode + 1;
     }

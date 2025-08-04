@@ -40,11 +40,11 @@ public class Branch{
         branchNumber = branchCode;
     }
     public void setBranchManager(String workPlace, int bankCode, int branchCode) {
-        branchManager = new BranchManager(workPlace, bankCode, branchCode, employeeList.size());
+        branchManager = new BranchManager(workPlace, bankCode, branchCode, 0);
 
     }
     public void setAssistantManager(String workPlace, int bankCode, int branchCode) {
-        assistantManager = new AssistantManager(workPlace, bankCode, branchCode, employeeList.size());
+        assistantManager = new AssistantManager(workPlace, bankCode, branchCode, 1);
     }
     public void setBranchFullName(String bankName) {
         branchFullName = bankName + " Branch " + (branchNumber+1);

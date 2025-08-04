@@ -39,7 +39,27 @@ public class BranchManager extends Employee {
         if (mails.isEmpty()) {
             System.out.println("\nThere is No Request");
         } else {
-            mails.getFirst();
+            System.out.println("\n" + mails.getFirst());
+            System.out.print("\nProcess This Request (Y/N)? ");
+            String accept = InputUtil.next();
+            if (!(accept.equalsIgnoreCase("Y"))) return;
+            int sStart = mails.getFirst().indexOf(":") + 2;
+            int accountIndex = Integer.parseInt(mails.getFirst().substring(sStart));
+            Customer customer = Menu.customers.get((accountIndex / 100) - 1);
+            Account account = customer.accountList.get(accountIndex%100);
+            //extract loan info from string massage %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            int amount = 0;
+            int period = 0;
+            int loanType;
+            if (account.getType().equals("Active Account")) loanType = 1;
+            else loanType = 2;
+            //check amount of loan with money in bank %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            System.out.print("\nLoan Info: \nDo You Accept (Y/N): ");
+            accept = InputUtil.next();
+            if (!(accept.equalsIgnoreCase("Y"))) return;
+            customer.setLoan(amount, period, loanType);
+            customer.haveLoan = true;
+            mails.removeFirst();
         }
     }
     public void receiveEmployeeList(){

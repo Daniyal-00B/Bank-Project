@@ -33,7 +33,7 @@ public class Teller extends Employee{
         if (mails.isEmpty()) {
             System.out.println("\nThere is No Request");
         } else {
-            mails.getFirst();
+            System.out.print("\n" + mails.getFirst());
             System.out.print("\nProcess This Request (Y/N)? ");
             String accept = InputUtil.next();
             if (!(accept.equalsIgnoreCase("Y"))) return;
@@ -64,7 +64,7 @@ public class Teller extends Employee{
                     mails.removeFirst();
                 }
                 else {
-                    String massage = "Your Account " + account.getNumber() + " Has Benn Closed";
+                    String massage = "Your Account " + account.getNumber() + " Has Been Closed";
                     Menu.bankList.get(BankCode).branchList.get(BranchCode).getBranchManager().closeAccount(accountIndex);
                     Menu.customers.get((accountIndex / 100) - 1).addMail(massage, accountIndex);
                     mails.removeFirst();
@@ -82,6 +82,7 @@ public class Teller extends Employee{
                     Menu.bankList.get(BankCode).branchList.get(BranchCode).getBranchAssistant().addMail(mails.getFirst());
                     String massage = "Your Loan Request With Code " + accountIndex + " is Processing by Manager Assistant";
                     Menu.customers.get((accountIndex / 100) - 1).addMail(massage, accountIndex);
+                    System.out.println("\nRequest Sent to Assistant for Reviwing");
                     mails.removeFirst();
                 }
                 else {

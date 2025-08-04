@@ -101,12 +101,18 @@ public class Menu {
                 user = customers.get(code%100-1);
             }
             else {
+                int checkCode = code;
                 code%=1000000;
                 int bankCode = (code/10000)-1;
                 code%=10000;
                 int branchCode = (code/100)-1;
                 int employeeUniCode = (code%100)-1;
-                user = bankList.get(bankCode).branchList.get(branchCode).employeeList.get(employeeUniCode);
+                if (checkCode == bankList.get(bankCode).branchList.get(branchCode).employeeList.get(employeeUniCode).getEmployeeCode())
+                    user = bankList.get(bankCode).branchList.get(branchCode).employeeList.get(employeeUniCode);
+                else {
+                    System.out.println("Incorrect Code! Try Again");
+                    return;
+                }
             }
         } catch (Exception _) {
             System.out.println("Incorrect Code! Try Again");
@@ -206,13 +212,13 @@ public class Menu {
     public static Employee chooseTeller(int bankCode) {
         Employee teller=null;
         boolean isFirst=true;
-        for (int i=2; i<bankList.get(bankCode).employeesList.size(); i++) {
+        for (int i=0; i<bankList.get(bankCode).employeesList.size(); i++) {
             if (bankList.get(bankCode).employeesList.get(i)==null) continue;
             if (isFirst) {
                 teller = bankList.get(bankCode).employeesList.get(i);
                 isFirst = false;
             }else {
-                if (teller.mails.size()>bankList.get(bankCode).employeesList.get(i).mails.size())
+                if (teller.mails.size() > bankList.get(bankCode).employeesList.get(i).mails.size())
                     teller = bankList.get(bankCode).employeesList.get(i);
             }
         }
