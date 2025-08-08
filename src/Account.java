@@ -148,8 +148,10 @@ public abstract class Account {
     public void setOwnerName(String ownerName) {
         this.ownerName = ownerName;
     }
-    public void setLoan(Loan loan) {
-        this.loan = loan;
+    public void setLoan(int amount, int period, Customer loanOwner) {
+        if (type.equals("Active Account")) loan = new ActiveLoan(amount, period, loanOwner);
+        else loan = new RegularLoan(amount, period, loanOwner);
+        setBalance(getBalance() + amount);
     }
 
     //**************************  (GETTERS)  **************************

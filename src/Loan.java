@@ -2,6 +2,14 @@ public class Loan {
     private int amount;
     private int paymentPeriod;
     private Customer loanOwner;
+    protected int loanPayment;
+
+
+    public Loan (int amount, int paymentPeriod, Customer loanOwner) {
+        setAmount(amount);
+        setLoanOwner(loanOwner);
+        setPaymentPeriod(paymentPeriod);
+    }
 
 
     public void setPaymentPeriod(int paymentPeriod) {

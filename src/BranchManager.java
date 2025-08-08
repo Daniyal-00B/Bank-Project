@@ -47,17 +47,44 @@ public class BranchManager extends Employee {
             int accountIndex = Integer.parseInt(mails.getFirst().substring(sStart));
             Customer customer = Menu.customers.get((accountIndex / 100) - 1);
             Account account = customer.accountList.get(accountIndex%100);
-            //extract loan info from string massage %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            int amount = 0;
-            int period = 0;
-            int loanType;
-            if (account.getType().equals("Active Account")) loanType = 1;
-            else loanType = 2;
-            //check amount of loan with money in bank %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            System.out.print("\nLoan Info: \nDo You Accept (Y/N): ");
+
+            //Extract Info from Massage
+            int tempIndex = mails.getFirst().indexOf("$");
+            String tempString = mails.getFirst().substring(0,tempIndex);
+            int amount = Integer.parseInt(tempString);
+            tempString = mails.getFirst().substring(tempIndex+2, tempIndex+4);
+            int period = Integer.parseInt(tempString);
+
+            //Check that Loan Amount is not more than Bank Money
+            String loanType;
+            if (account.getType().equals("Active Account")) loanType = "Active Account";
+            else loanType = "Regular";
+            double sum=0;
+            for (Integer i : Menu.bankList.get(BankCode).customerList) {
+                i = (i%400000) -1;
+                for (Account j : Menu.customers.get(i).accountList) {
+                    if (j==null) continue;
+                    if (j.getType().equals(loanType)) sum+=j.getBalance();
+                    if (!(j.getType().equals("Active Account"))) sum+=j.getBalance();
+                }
+            }
+            if (amount >= (sum/2)) {
+                String massage = "The Amount of Requested Loan is More Than Banks Property\nDate: " + Menu.time;
+                System.out.println("\n" + massage);
+                customer.addMail(massage, accountIndex);
+                mails.removeFirst();
+                return;
+            }
+
+
+            String loanInfo = loanType + " Loan Request From " + customer.getFullName() + "\nAmount: " + amount + "$\n" + period +
+                            " Months";
+            System.out.print("\nLoan Info: \n" + loanInfo + "\nDo You Accept (Y/N): ");
             accept = InputUtil.next();
             if (!(accept.equalsIgnoreCase("Y"))) return;
-            customer.setLoan(amount, period, loanType);
+            account.setLoan(amount, period, customer);
+            String massage = "Your Loan Request for Account " + account.getNumber() + " Accepted\nDate: " + Menu.time;
+            customer.addMail(massage, accountIndex);
             customer.haveLoan = true;
             mails.removeFirst();
         }

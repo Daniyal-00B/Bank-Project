@@ -199,7 +199,7 @@ public class Menu {
         temp = (temp%10000)-1001;
         try {
             validAccount = customers.get((temp/100)-1).accountList.get(temp%100);
-            if (validAccount==null) return -1;
+            if (validAccount==null || !validAccount.availability) return -1;
         } catch (Exception _) {
             return -1;
         }

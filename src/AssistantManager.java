@@ -42,12 +42,12 @@ public class AssistantManager extends Employee{
             boolean haveLoan = customer.haveLoan;
             if (haveLoan) {
                 System.out.println("\nThis Customer Has unfi Loan so Bank Cannot Give Loan");
-                String massage = "Your Loan Request By Code " + accountIndex + " is Rejected Because You Have Loan";
+                String massage = "Your Loan Request By Code " + accountIndex + " is Rejected Because You Have Loan\nDate: " + Menu.time;
                 customer.addMail(massage, accountIndex);
                 mails.removeFirst();
             } else {
                 Menu.bankList.get(BankCode).branchList.get(BranchCode).getBranchManager().addMail(mails.getFirst());
-                String massage = "Your Loan Request With Code " + accountIndex + " is Processing by Bank Manager";
+                String massage = "Your Loan Request With Code " + accountIndex + " is Processing by Bank Manager\nDate: " + Menu.time;
                 Menu.customers.get((accountIndex / 100) - 1).addMail(massage, accountIndex);
                 System.out.println("\nRequest Sent To The Branch Manager");
                 mails.removeFirst();

@@ -126,7 +126,7 @@ public class Customer extends Person{
         }
         int counter=0;
         for (int i=0 ; i<accountList.size() ; i++) {
-            if (accountList.get(i)==null) continue;
+            if (accountList.get(i)==null || !accountList.get(i).availability) continue;
             System.out.println("\n[" + (i+1) + "]*************************");
             accountList.get(i).displayAccountInfo();
             counter++;
@@ -231,7 +231,6 @@ public class Customer extends Person{
         }
     }
 
-    public void setLoan(int amount, int period, int type) {}
     public void setId(int unicode) {
         id = 4000000 + unicode + 1;
     }
