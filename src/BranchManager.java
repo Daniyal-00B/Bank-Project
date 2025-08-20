@@ -77,16 +77,22 @@ public class BranchManager extends Employee {
             }
 
 
-            String loanInfo = loanType + " Loan Request From " + customer.getFullName() + "\nAmount: " + amount + "$\n" + period +
-                            " Months";
+            String loanInfo = loanType + " Loan Request From " + customer.getFullName() + "\nAmount: "
+                    + amount + "$\nPayment Period: " + period + " Months";
             System.out.print("\nLoan Info: \n" + loanInfo + "\nDo You Accept (Y/N): ");
             accept = InputUtil.next();
-            if (!(accept.equalsIgnoreCase("Y"))) return;
+            if (!(accept.equalsIgnoreCase("Y"))) {
+                String massage = "Loan Request Rejected by Manager\nDate: " + Menu.time;
+                customer.addMail(massage, accountIndex);
+                mails.removeFirst();
+                return;
+            }
             account.setLoan(amount, period, customer);
             String massage = "Your Loan Request for Account " + account.getNumber() + " Accepted\nDate: " + Menu.time;
             customer.addMail(massage, accountIndex);
-            customer.haveLoan = true;
+            customer.loanAccount = accountIndex;
             mails.removeFirst();
+            System.out.println("\nThe Loan Was Approved for the Customer");
         }
     }
     public void receiveEmployeeList(){

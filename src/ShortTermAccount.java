@@ -1,5 +1,5 @@
 public class ShortTermAccount extends Account{
-    private double sumOfBalance;
+    private int sumOfBalance;
     int lastTimeProfit = 0;
     private RegularLoan loan;
 
@@ -14,8 +14,8 @@ public class ShortTermAccount extends Account{
                 sumOfBalance += getBalance();
             }
             if ((time/12) > lastTimeProfit) {
-                double percentageOfProfit = (sumOfBalance*5)/100;
-                double balance = getBalance() + percentageOfProfit;
+                int percentageOfProfit = (sumOfBalance*5)/100;
+                int balance = getBalance() + percentageOfProfit;
                 setBalance(balance);
                 sumOfBalance = 0;
                 lastTimeProfit++;

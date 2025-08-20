@@ -1,16 +1,40 @@
-public class Loan {
+public abstract class Loan {
     private int amount;
     private int paymentPeriod;
     private Customer loanOwner;
-    protected int loanPayment;
+    protected int loanBasePayment;
+    private int currentPayment;
+    public int remainMonths;
 
 
     public Loan (int amount, int paymentPeriod, Customer loanOwner) {
         setAmount(amount);
         setLoanOwner(loanOwner);
         setPaymentPeriod(paymentPeriod);
+        reSetCurrentPayment();
+        remainMonths = getPaymentPeriod();
     }
 
+    abstract int lateFee();
+    public abstract void loanInfo();
+    public void payment(int time, int advanceTime) {
+        while (advanceTime!=0) {
+            time++;
+            if (currentPayment==0) currentPayment=loanBasePayment;
+            else {
+                int fee = lateFee();
+                if (remainMonths<1) currentPayment += fee;
+                else {
+                    currentPayment += (currentPayment + fee);
+                    String massage = "You Have Not Paid the Installment for Month " + time
+                            + " Therefore a " + fee + "$ Late Fee Applies to You\nDate: " + time;
+                    getLoanOwner().addMail(massage);
+                }
+            }
+            remainMonths--;
+            advanceTime--;
+        }
+    }
 
     public void setPaymentPeriod(int paymentPeriod) {
         this.paymentPeriod = paymentPeriod;
@@ -20,6 +44,9 @@ public class Loan {
     }
     public void setLoanOwner (Customer loanOwner) {
         this.loanOwner = loanOwner;
+    }
+    public void reSetCurrentPayment() {
+        currentPayment = 0;
     }
 
     public int getPaymentPeriod() {
@@ -31,4 +58,8 @@ public class Loan {
     public Customer getLoanOwner() {
         return loanOwner;
     }
+    public int getCurrentPayment() {
+        return currentPayment;
+    }
+
 }

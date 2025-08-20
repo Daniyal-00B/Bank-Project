@@ -4,12 +4,13 @@ import java.util.Locale;
 public class Customer extends Person{
     private int id;
     ArrayList<Account> accountList = new ArrayList<>();
-    public boolean haveLoan = false;
+    public int loanAccount;
 
 
     public Customer(int bankCode, int branchCode, int uniCode){
         super(3);
         setId(uniCode);
+        loanAccount=0;
         System.out.println("You Are Signed Up 🎉");
         System.out.println("""
                 
@@ -17,6 +18,8 @@ public class Customer extends Person{
                 --------------------------------------------------""");
         createAccount(bankCode, branchCode);
     }
+
+
     public void userMenu(){
         System.out.print("    \n$$$$$$$$$$$$$$ (Welcome Back) $$$$$$$$$$$$$$");
         do {
@@ -30,6 +33,7 @@ public class Customer extends Person{
                     5. Status
                     6. All My Accounts
                     7. Search Account
+                    8. Loan Status
                     Choose a Number (0 for Logout):""" + " "
             );
             choice = InputUtil.next();
@@ -41,6 +45,7 @@ public class Customer extends Person{
                 case "5" -> statusReport();
                 case "6" -> displayAccountList();
                 case "7" -> searchAccount();
+                case "8" -> loanStatus();
                 case "0" -> {
                     System.out.println("You Are Logged Out...\n");
                     return;
@@ -49,6 +54,8 @@ public class Customer extends Person{
             }
         }while (true);
     }
+
+
 
     public void createAccount(int bankCode, int branchCode){
         System.out.print("""
@@ -228,8 +235,61 @@ public class Customer extends Person{
                 mails.add(massage);
                 return;
             }
+            else mails.add(massage);
         }
     }
+    public void loanStatus() {
+        if (loanAccount!=0) {
+            Account account = Menu.customers.get((loanAccount / 100) - 1).accountList.get(loanAccount % 100);
+            account.loan.loanInfo();
+            System.out.println(account.getNumber());
+            int payment = account.loan.getCurrentPayment();
+            if (payment==0) System.out.println("You Have No Installment For This Month");
+            else {
+                System.out.print("You Have " + payment + "$ Installment For This Month\n" +
+                        "Would You Like to Pay Your Installment (Y/N)? ");
+                String yesOrNo = InputUtil.next();
+                if (!(yesOrNo.equalsIgnoreCase("Y"))) return;
+                boolean haveMoney = false;
+                for (int i=0; i<accountList.size(); i++) {
+                    if (accountList.get(i)==null || !accountList.get(i).availability || accountList.get(i).getBalance()-5 < payment) continue;
+                    haveMoney = true;
+                    System.out.println("[" + i + "] " + accountList.get(i).getBankName() + "\n" + accountList.get(i).getNumber());
+                }
+                if (!haveMoney) {
+                    System.out.println("\nYou Don't Have Enough Money to Pay This Installment\nPlease Charge Your Accounts");
+                    return;
+                }
+                System.out.print("Please Choose an Account [?]: ");
+                int select;
+                Account selectedAccount;
+                try {
+                    select = InputUtil.nextInt();
+                    selectedAccount = accountList.get(select);
+                }catch (Exception _) {
+                    System.out.println("\nInvalid Choice");
+                    return;
+                }
+
+                selectedAccount.setBalance((selectedAccount.getBalance()-payment));
+                account.loan.reSetCurrentPayment();
+                String massage = "\nYour Installment for Month " + Menu.time + " is Payed";
+                addMail(massage);
+                System.out.println(massage);
+                if (account.loan.remainMonths<=0 && account.loan.getCurrentPayment()==0) {
+                    System.out.println("""
+                            
+                            ****************************************
+                            You Have Paid All Your Loan Installments
+                            ****************************************""");
+                    account.loan=null;
+                    loanAccount=0;
+                }
+            }
+        } else System.out.println("\nYou Don't Have Loan");
+    }
+
+
 
     public void setId(int unicode) {
         id = 4000000 + unicode + 1;
@@ -237,4 +297,5 @@ public class Customer extends Person{
     public int getId() {
         return id;
     }
+
 }

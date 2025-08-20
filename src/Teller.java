@@ -43,7 +43,6 @@ public class Teller extends Employee{
             char requestType = mails.getFirst().charAt(0);
             if (requestType=='C') {
                 if (account.loan!=null) {
-                    account.getLoanStatus();
                     String massage = "This Account Has Loan, So Can NOT be Close!\nDate: " + Menu.time;
                     account.availability=true;
                     System.out.print("\n" + massage + "\nWould You Like to Add Some Explanation About This?\nMassage: ");
@@ -71,8 +70,8 @@ public class Teller extends Employee{
                 mails.removeFirst();
             }
             else {
-                System.out.println("\nLoan Request From\n" + account.getOwnerName() + "\nFor Account " + account.getNumber());
-                System.out.println("Client Full Info:");
+                System.out.println("\nLoan Request From\n" + account.getOwnerName() + "\nFor Account: " + account.getNumber());
+                System.out.print("Client Full Info:");
                 Menu.customers.get((accountIndex / 100) - 1).customerInfo();
                 System.out.print("\nAccept (Y/N)? ");
                 do {

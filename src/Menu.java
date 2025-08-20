@@ -173,10 +173,29 @@ public class Menu {
                 if (customer.accountList.get(i)==null) continue;
                 if (customer.accountList.get(i) instanceof ShortTermAccount)
                     ((ShortTermAccount)customer.accountList.get(i)).setProfit(time, advance);
+                if (customer.loanAccount!=0) {
+                    Account account = Menu.customers.get((customer.loanAccount / 100) - 1).accountList.get(customer.loanAccount % 100);
+                    account.loan.payment(time, advance);
+                }
             }
         }
         time+=advance;
         System.out.println("\n" + advance + " Months After Now");
+    }
+
+    static void advanceTime(int advance) {
+        for (Customer customer : customers) {
+            for (int i=0;  i<customer.accountList.size(); i++) {
+                if (customer.accountList.get(i)==null) continue;
+                if (customer.accountList.get(i) instanceof ShortTermAccount)
+                    ((ShortTermAccount)customer.accountList.get(i)).setProfit(time, advance);
+                if (customer.loanAccount!=0) {
+                    Account account = Menu.customers.get((customer.loanAccount / 100) - 1).accountList.get(customer.loanAccount % 100);
+                    account.loan.payment(time, advance);
+                }
+            }
+        }
+        time+=advance;
     }
 
     public static void showAllBanks() {

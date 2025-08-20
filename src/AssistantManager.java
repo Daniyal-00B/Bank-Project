@@ -39,10 +39,12 @@ public class AssistantManager extends Employee{
             int sStart = mails.getFirst().indexOf(":") + 2;
             int accountIndex = Integer.parseInt(mails.getFirst().substring(sStart));
             Customer customer = Menu.customers.get((accountIndex / 100) - 1);
-            boolean haveLoan = customer.haveLoan;
-            if (haveLoan) {
-                System.out.println("\nThis Customer Has unfi Loan so Bank Cannot Give Loan");
-                String massage = "Your Loan Request By Code " + accountIndex + " is Rejected Because You Have Loan\nDate: " + Menu.time;
+
+            if (customer.loanAccount!=0) {
+                System.out.println("\nThis Customer Has Ongoing Loan so Bank Cannot Give Another Loan");
+                String massage = "Your Loan Request By for Account "
+                                + Menu.customers.get((accountIndex / 100) - 1).accountList.get(accountIndex%100)
+                                + "\nis Rejected Because You Have Loan\nDate: " + Menu.time;
                 customer.addMail(massage, accountIndex);
                 mails.removeFirst();
             } else {

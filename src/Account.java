@@ -1,7 +1,7 @@
 public abstract class Account {
     private String number;
     private String password;
-    private double balance;
+    private int balance;
     private String type;
     private String bankName;
     private String ownerName;
@@ -31,10 +31,10 @@ public abstract class Account {
                 System.out.println("\nThis is Your Account Number😒");
                 return;
             }
-            double transferAmount;
+            int transferAmount;
             do {
                 System.out.print("Transfer Amount ($): ");
-                transferAmount = InputUtil.nextDouble();
+                transferAmount = InputUtil.nextInt();
                 if (transferAmount <= getBalance()-5 && transferAmount > 0) break;
                 System.out.println("Maximum Transfer Amount is " + (getBalance()-5) + "$");
             } while (true);
@@ -46,8 +46,8 @@ public abstract class Account {
             if (accept.equalsIgnoreCase("Y")) {
                 setBalance(getBalance()-transferAmount);
                 distAccount.setBalance(distAccount.getBalance()+transferAmount);
-                setBalance(getBalance()-0.1);
-                System.out.printf("\nMoney Successfully Transferred\nYour Remaining Balance is %.1f$\n" , getBalance());
+                setBalance(getBalance()-1);
+                System.out.printf("\nMoney Successfully Transferred\nYour Remaining Balance is %d$\n" , getBalance());
             }
             else {
                 System.out.println("\nMoney Transfer Cancelled...");
@@ -55,24 +55,24 @@ public abstract class Account {
         }
     }
     public void deposit() {
-        double amount;
+        int amount;
         System.out.print("\nDeposit Amount ($): ");
         try {
-            amount = InputUtil.nextDouble();
+            amount = InputUtil.nextInt();
         } catch (Exception _) {
             System.out.println("\nOperation Successfully FAILED...");
             InputUtil.next(); // Clear Buffer
             return;
         }
-        double balance = getBalance() + amount;
+        int balance = getBalance() + amount;
         setBalance(balance);
         System.out.println(amount + "$ Deposited in Your Account");
     }
     public void withdraw() {
-        double amount;
+        int amount;
         System.out.print("\nWithdraw Amount ($): ");
         try {
-            amount = InputUtil.nextDouble();
+            amount = InputUtil.nextInt();
         }catch (Exception _) {
             System.out.println("\nOperation Successfully FAILED...");
             InputUtil.next(); // Clear Buffer
@@ -82,7 +82,7 @@ public abstract class Account {
             System.out.println("\nOperation Failed\nMaximum Withdraw Amount Is " + (getBalance()-5) + "$");
             return;
         }
-        double balance = getBalance() - amount;
+        int balance = getBalance() - amount;
         setBalance(balance);
         System.out.println("\nOperation Successful");
     }
@@ -108,12 +108,10 @@ public abstract class Account {
             choice = InputUtil.next();
             switch (choice) {
                 case "1" -> {
-                    setBalance(getBalance()-0.1);
-                    System.out.printf("\nYour Balance is %.1f$\n" , getBalance());
+                    setBalance(getBalance()-1);
+                    System.out.printf("\nYour Balance is %d$\n" , getBalance());
                 }
-                case "2" -> {
-                    moneyTransport();
-                }
+                case "2" -> moneyTransport();
                 case "3" -> deposit();
                 case "4" -> withdraw();
                 case "0" -> {}
@@ -136,7 +134,7 @@ public abstract class Account {
         System.out.print("Please Charge Your Account ($): ");
         balance = InputUtil.nextInt();
     }
-    public void setBalance(double money) {
+    public void setBalance(int money) {
         balance = money;
     }
     public void setType(String type) {
@@ -161,7 +159,7 @@ public abstract class Account {
     public String getPassword() {
         return password;
     }
-    public double getBalance() {
+    public int getBalance() {
         return balance;
     }
     public String getType() {
@@ -172,8 +170,5 @@ public abstract class Account {
     }
     public String getOwnerName() {
         return ownerName;
-    }
-    public void getLoanStatus() {
-        System.out.println("%%%%%%%%%%%%%%  Unfinished Loan  %%%%%%%%%%%%%");
     }
 }
