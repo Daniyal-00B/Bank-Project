@@ -19,18 +19,18 @@ public class GUI {
         frame.setLocationRelativeTo(null);
         frame.setLayout(new BorderLayout());
 
-        // بک‌گراند (اختیاری)
+
         ImageIcon backgroundIcon = new ImageIcon("background.jpg");
         JLabel backgroundLabel = new JLabel(backgroundIcon);
         backgroundLabel.setLayout(new BorderLayout());
         frame.setContentPane(backgroundLabel);
 
-        // پنل بالا با دکمه‌ها
+
         topPanel = new JPanel(new GridLayout(1, 4, 10, 10));
         topPanel.setBorder(new EmptyBorder(10, 40, 50, 40));
-        topPanel.setOpaque(false); // شفاف برای نمایش تصویر زمینه
+        topPanel.setOpaque(false);
 
-        // خروجی وسط صفحه
+
         outputLabel = new JLabel(" ", SwingConstants.CENTER);
         outputLabel.setFont(new Font("Arial", Font.BOLD, 40));
         outputLabel.setForeground(Color.WHITE);
@@ -39,12 +39,12 @@ public class GUI {
         backgroundLabel.add(topPanel, BorderLayout.SOUTH);
         backgroundLabel.add(outputLabel, BorderLayout.CENTER);
 
-        showMainMenu(); // نمایش منوی اولیه
+        showMainMenu();
 
         frame.setVisible(true);
     }
 
-    // منوی اصلی
+
     private void showMainMenu() {
         topPanel.removeAll();
 
@@ -68,7 +68,7 @@ public class GUI {
         topPanel.repaint();
     }
 
-    // منوی ATM
+
     private void showATMMenu() {
         String number = JOptionPane.showInputDialog("Enter Your Account Number:");
         int accountIndex = Menu.checkAccount(number);

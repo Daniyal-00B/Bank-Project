@@ -23,9 +23,9 @@ public abstract class Loan {
             if (currentPayment==0) currentPayment=loanBasePayment;
             else {
                 int fee = lateFee();
-                if (remainMonths<1) currentPayment += fee;
+                if (remainMonths<=0) currentPayment += fee;
                 else {
-                    currentPayment += (currentPayment + fee);
+                    currentPayment += (loanBasePayment + fee);
                     String massage = "You Have Not Paid the Installment for Month " + time
                             + " Therefore a " + fee + "$ Late Fee Applies to You\nDate: " + time;
                     getLoanOwner().addMail(massage);

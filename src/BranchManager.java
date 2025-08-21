@@ -92,7 +92,7 @@ public class BranchManager extends Employee {
             customer.addMail(massage, accountIndex);
             customer.loanAccount = accountIndex;
             mails.removeFirst();
-            System.out.println("\nThe Loan Was Approved for the Customer");
+            System.out.println("\nThe Loan Have Been Approved for the Customer");
         }
     }
     public void receiveEmployeeList(){

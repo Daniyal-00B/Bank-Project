@@ -174,6 +174,9 @@ public class Customer extends Person{
         if (!YorN.equalsIgnoreCase("Y")) return;
         System.out.print("1. Regular Loan\n2. Active Loan\nChoose Loan Type: ");
         String loanType = InputUtil.next();
+        System.out.println();
+
+
         if (!(loanType.equals("1") || loanType.equals("2"))) {
             System.out.println("\nInvalid Choice");
             return;
@@ -206,7 +209,7 @@ public class Customer extends Person{
                 System.out.println("\nInvalid Number Try Again");
                 return;
             }
-            System.out.print("Please Enter Amount of Loan ($): ");
+            System.out.print("Loan Amount ($): ");
             int amount = InputUtil.nextInt();
             String returnPeriod;
             do {
@@ -242,6 +245,8 @@ public class Customer extends Person{
         if (loanAccount!=0) {
             Account account = Menu.customers.get((loanAccount / 100) - 1).accountList.get(loanAccount % 100);
             account.loan.loanInfo();
+            System.out.println("Remaining Months: " + account.loan.remainMonths + "\n");
+
             System.out.println(account.getNumber());
             int payment = account.loan.getCurrentPayment();
             if (payment==0) System.out.println("You Have No Installment For This Month");
@@ -249,6 +254,8 @@ public class Customer extends Person{
                 System.out.print("You Have " + payment + "$ Installment For This Month\n" +
                         "Would You Like to Pay Your Installment (Y/N)? ");
                 String yesOrNo = InputUtil.next();
+                System.out.println();
+
                 if (!(yesOrNo.equalsIgnoreCase("Y"))) return;
                 boolean haveMoney = false;
                 for (int i=0; i<accountList.size(); i++) {
