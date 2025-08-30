@@ -30,10 +30,9 @@ public class Customer extends Person{
                     2. Create Account
                     3. Close Account Request
                     4. Loan Request
-                    5. Status
-                    6. All My Accounts
-                    7. Search Account
-                    8. Loan Status
+                    5. All My Accounts
+                    6. Search Account
+                    7. Loan Status
                     Choose a Number (0 for Logout):""" + " "
             );
             choice = InputUtil.next();
@@ -42,10 +41,9 @@ public class Customer extends Person{
                 case "2" -> createAccount();
                 case "3" -> closeAccount();
                 case "4" -> loanRequest();
-                case "5" -> statusReport();
-                case "6" -> displayAccountList();
-                case "7" -> searchAccount();
-                case "8" -> loanStatus();
+                case "5" -> displayAccountList();
+                case "6" -> searchAccount();
+                case "7" -> loanStatus();
                 case "0" -> {
                     System.out.println("You Are Logged Out...\n");
                     return;
@@ -140,7 +138,6 @@ public class Customer extends Person{
         }
         if (counter==0) System.out.println("\nYour Account List is Empty");
     }
-    public void statusReport(){}
     public void searchAccount(){
         System.out.print("\nPlease Enter Your Account Bank Name or Account Type\nSearch: ");
         String search = InputUtil.nextLine().toLowerCase(Locale.ROOT);
@@ -183,16 +180,17 @@ public class Customer extends Person{
         }
         int count=0;
         for (Account i : accountList) {
-            if (i==null) continue;
-            if (loanType.equals("2"))
-                if (!i.getType().equals("Active Account")) {
+            if (i==null || !i.availability) continue;
+            if (loanType.equals("2")) {
+                if (i.getType().equals("Active Account")) {
                     i.displayAccountInfo();
                     count++;
                 }
-            else if (i.getType().equals("Active Account")) {
-                i.displayAccountInfo();
-                count++;
-                }
+            }
+            else if (!i.getType().equals("Active Account")) {
+                    i.displayAccountInfo();
+                    count++;
+            }
         }
         if (count==0) {
             System.out.println("\nYou Have No Account For This Type, Please Create an Account First");
@@ -261,7 +259,7 @@ public class Customer extends Person{
                 for (int i=0; i<accountList.size(); i++) {
                     if (accountList.get(i)==null || !accountList.get(i).availability || accountList.get(i).getBalance()-5 < payment) continue;
                     haveMoney = true;
-                    System.out.println("[" + i + "] " + accountList.get(i).getBankName() + "\n" + accountList.get(i).getNumber());
+                    System.out.println("[" + i + "] " + accountList.get(i).getBankName() + "\n  " + accountList.get(i).getNumber());
                 }
                 if (!haveMoney) {
                     System.out.println("\nYou Don't Have Enough Money to Pay This Installment\nPlease Charge Your Accounts");

@@ -55,7 +55,7 @@ public class GUI {
         JButton btnAdvanceTime = new JButton("Advance Time");
 
         btnCreateBank.addActionListener(_ -> Menu.createBank());
-        btnLogin.addActionListener(_ -> showOutput("Login / Sign Up selected"));
+        btnLogin.addActionListener(_ -> Menu.login_signup());
         btnATM.addActionListener(_ -> showATMMenu());
         btnAdvanceTime.addActionListener(_ -> handleAdvanceTime());
 

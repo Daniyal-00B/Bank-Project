@@ -183,10 +183,12 @@ public class Menu {
         System.out.println("\n" + advance + " Months After Now");
     }
 
+
+    //For GUI
     static void advanceTime(int advance) {
         for (Customer customer : customers) {
             for (int i=0;  i<customer.accountList.size(); i++) {
-                if (customer.accountList.get(i)==null) continue;
+                if (customer.accountList.get(i)==null || !customer.accountList.get(i).availability) continue;
                 if (customer.accountList.get(i) instanceof ShortTermAccount)
                     ((ShortTermAccount)customer.accountList.get(i)).setProfit(time, advance);
                 if (customer.loanAccount!=0) {

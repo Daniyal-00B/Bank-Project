@@ -31,6 +31,7 @@ public abstract class Loan {
                     getLoanOwner().addMail(massage);
                 }
             }
+            time++;
             remainMonths--;
             advanceTime--;
         }

@@ -11,7 +11,14 @@ Assistant      2020202
 Teller2        3020203
 
 
-Customers      4000001 - 4000001+n
+Customers      4000001 -> 4000001+n
 
+
+Bank1, Branch1, Customer1, Account1, type = Active Account
+    1001 1001 6902 1101
+Bank2, Branch1, Customer3, Account5, type = Current Account
+    1002 1001 7395 1305
+Bank3, Branch4, Customer1, Account2, type = Short Term Account
+    1003 1004 8874 1102
 
 All Accounts Password is 8888
